@@ -23,12 +23,12 @@ jobs:
     - name: Build Angular app
       run: npm run build --prod
 
-    - name: Copy files to Azure VM
+    - name: Copy files to VM
       uses: appleboy/scp-action@v1.0.0
       with:
-        host: ${{ secrets.AZURE_VM_HOST }}
-        username: ${{ secrets.AZURE_VM_USER }}
-        key: ${{ secrets.AZURE_VM_SSH_KEY }}
+        host: ${{ secrets.VM_HOST }}
+        username: ${{ secrets.VM_USER }}
+        key: ${{ secrets.VM_SSH_KEY }}
         source: "dist/paybills-client/*"
         target: "/var/www/html/billminder-app"
         strip_components: 2
