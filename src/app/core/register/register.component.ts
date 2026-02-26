@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   model: any = {};
   newUserForm: FormGroup = new FormGroup({});
 
-  constructor(private accountService: AccountService, 
+  constructor(private accountService: AccountService,
     private toastrService: ToastrService) { }
 
   ngOnInit(): void {
@@ -27,7 +27,9 @@ export class RegisterComponent implements OnInit {
     this.newUserForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]),
-      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(16), this.matchValues('password')])
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(16), this.matchValues('password')]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      confirmEmail: new FormControl('', [Validators.required, Validators.email, this.matchValues('email')]),
     })
     this.newUserForm.controls['password'].valueChanges.subscribe({
       next: () => this.newUserForm.controls['confirmPassword'].updateValueAndValidity()
@@ -36,7 +38,7 @@ export class RegisterComponent implements OnInit {
 
   matchValues(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
-      return control.value === control.parent?.get(matchTo)?.value ? null : {notMatching: true}
+      return control.value === control.parent?.get(matchTo)?.value ? null : { notMatching: true }
     }
   }
 
@@ -46,7 +48,7 @@ export class RegisterComponent implements OnInit {
 
 
   register() {
-    this.accountService.register(this.newUserForm.value).subscribe(response => {      
+    this.accountService.register(this.newUserForm.value).subscribe(response => {
       this.cancel();
     }, error => {
       console.log(error.error);
