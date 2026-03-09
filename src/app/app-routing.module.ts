@@ -25,7 +25,7 @@ const routes: Routes = [
       {path: 'bill-type-list', component: BillTypeListComponent},
       {path: 'receiving-type-list', component: ReceivingTypeListComponent},
       {path: 'bills', component: BillListComponent},
-      {path: 'validate', component: EmailValidateComponent},
+      // {path: 'validate', component: EmailValidateComponent},
       {path: 'user-edit', component: UserEditComponent}
     ]
   },
