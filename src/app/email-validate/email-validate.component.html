@@ -1,14 +1,13 @@
 <div *ngIf="validated" class="container" style="margin-top: 100px; text-align: center;">
-    <div class="container-fluid mt-5" >    
-            <h4>Thanks! Your email has been succesfully validated!</h4>
+            <div class="success-icon">✓</div>
+            <h4 class="message">Your email has been successfully validated. You can now access all features of Billminder.</h4>
             <ng-container *ngIf="(accountService.currentUser$ | async) == null">
-                <p class="lead">Login above to continue using the application</p>
+            <a href="https://billminder.com.br">Return to Home</a>
             </ng-container>    
-    </div>
+
 </div>
-<div *ngIf="error" class="container" style="margin-top: 100px; text-align: center;">
-    <div class="container-fluid mt-5" >    
+<div *ngIf="error" class="container" style="margin-top: 100px; text-align: center;"> 
             <h4>There was an error when validating your email</h4>
             <p class="lead">Please contact our support for more details</p>
-    </div>
+            <a href="https://billminder.com.br">Return to Home</a>
 </div>

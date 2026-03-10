@@ -24,11 +24,11 @@ const routes: Routes = [
       {path: 'bill-type/:id', component: BillTypeDetailComponent},
       {path: 'bill-type-list', component: BillTypeListComponent},
       {path: 'receiving-type-list', component: ReceivingTypeListComponent},
-      {path: 'bills', component: BillListComponent},
-      // {path: 'validate', component: EmailValidateComponent},
+      {path: 'bills', component: BillListComponent},      
       {path: 'user-edit', component: UserEditComponent}
     ]
   },
+  {path: 'validate', component: EmailValidateComponent},
   {path: 'home', component: HomeComponent},
   {path: 'errors', component: TestErrorsComponent},
   {path: 'server-error', component: ServerErrorComponent},
