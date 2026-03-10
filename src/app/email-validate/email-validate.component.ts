@@ -20,9 +20,13 @@ export class EmailValidateComponent implements OnInit {
         var emailToken = params.emailToken;
         
         this.accountService.validateEmail(email, emailToken)
-          .subscribe({
-            complete: () => this.validated = true,
-            error: () => this.error = true
+          .subscribe(response => {
+            this.validated = true;
+            console.log(response);
+            
+          }, error => {
+            this.error = true;
+            console.log("Error:", error);
           });
       });    
   }

@@ -1,0 +1,44 @@
+.success-icon {
+    width: 60px;
+    height: 60px;
+    background: #4CAF50;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    font-size: 40px;
+}
+
+a {
+    display: inline-block;
+    background: linear-gradient(135deg, #157347 0%, #157347 100%);
+    color: white;
+    padding: 12px 40px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-size: 16px;
+}
+
+a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.message {
+    color: #666;
+    font-size: 24px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+
+.container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    text-align: center;
+}
