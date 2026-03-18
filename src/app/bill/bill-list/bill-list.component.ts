@@ -52,7 +52,7 @@ export class BillListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadUser();
+    this.loadBillsAndReceivings();
   }
 
   get selectedBillsTotal(): number {
@@ -62,9 +62,6 @@ export class BillListComponent implements OnInit {
   set selectedBillsTotal(value: number) {
     this._selectedBillsTotal = value;
     this._selectedBalance = this._selectedReceivingsTotal - this._selectedBillsTotal;
-    console.log('Selected Bills Total:', this._selectedBillsTotal);
-    console.log('Selected Receivings Total:', this._selectedReceivingsTotal);
-    console.log('Balance:', this._selectedBalance);    
   }
 
   get selectedReceivingsTotal(): number {
@@ -82,7 +79,7 @@ export class BillListComponent implements OnInit {
 
   pageChanged(event: any) {
     this.pageNumberBills = event.page;
-    this.loadUser();
+    this.loadBillsAndReceivings();
   }
 
   openModalForEdit(template: TemplateRef<any>, billToEdit: Bill) {
@@ -97,7 +94,7 @@ export class BillListComponent implements OnInit {
   closeModal(value: boolean) {
     this.modalRef.hide();
     if (value)
-      this.loadUser();
+      this.loadBillsAndReceivings();
   }
 
   updateTotal() {
@@ -115,7 +112,7 @@ export class BillListComponent implements OnInit {
     this.balanceTotal = this.receivingsTotal - this.billsTotal;
   }
 
-  loadUser() {
+  loadBillsAndReceivings() {
     this.loading = true;
     this.username = JSON.parse(localStorage.getItem('user')!).username;
     this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumberBills, this.pageSizeBills).subscribe(bills => {
@@ -136,13 +133,13 @@ export class BillListComponent implements OnInit {
 
   deleteBill(bill: Bill) {
     if (confirm("Are you sure to delete " + bill.billType.description + "?")) {
-      this.billsService.delete(bill).subscribe(_ => this.loadUser());
+      this.billsService.delete(bill).subscribe(_ => this.loadBillsAndReceivings());
     }
   }
 
   deleteReceiving(receiving: Receiving) {
     if (confirm("Are you sure to delete " + receiving.receivingType.description + "?")) {
-      this.receivingService.delete(receiving).subscribe(_ => this.loadUser());
+      this.receivingService.delete(receiving).subscribe(_ => this.loadBillsAndReceivings());
     }
   }
 
@@ -202,13 +199,33 @@ export class BillListComponent implements OnInit {
     this.receivings.forEach(b => b.selected = select);
   }
 
+  onPreviousMonthClick() {
+    if (this.selectedMonth == 1) {
+      this.selectedMonth = 12;
+      this.selectedYear--;
+    } else {
+      this.selectedMonth--;
+    }
+    this.loadBillsAndReceivings();
+  }
+
+  onNextMonthClick() {
+    if (this.selectedMonth == 12) {
+      this.selectedMonth = 1;
+      this.selectedYear++;
+    } else {
+      this.selectedMonth++;
+    }
+    this.loadBillsAndReceivings();
+  }
+
   onFilterMonth() {
-    this.loadUser();
+    this.loadBillsAndReceivings();
   }
 
   onFilterYear() {
     if (this.selectedYear.toString().length === 4)
-      this.loadUser();
+      this.loadBillsAndReceivings();
   }
 
   copyBills() {

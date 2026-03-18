@@ -2,19 +2,25 @@
 
   <div class="container shadow-sm p-4">
   
-    <div class="d-flex ml-lg-2 mr-lg-2 mb-4">
+    <div class="d-flex mb-4">
       <div class="d-flex justify-content-center">
-        <span class="input-group-text">Month</span>
-        <select id="month" class="form-control mr-2 rounded" style="width: 100px;" [(ngModel)]="selectedMonth"
+        <button id="previous-month" type="button" class="btn btn-primary fw-bold fs-6" style="min-width: 3rem; margin-right: 0.25rem;" 
+          (click)="onPreviousMonthClick()"><</button>
+       
+        <span class="input-group-text fw-bold fs-6">Month</span>
+        <select id="month" class="form-control mr-2 rounded fs-6" style="width: 8rem;" [(ngModel)]="selectedMonth"
           (change)="onFilterMonth()">
           <option value="" [disabled]="true">--- Select month ---</option>
           <option *ngFor="let month of months" [value]="month.id">{{month.name}}</option>
         </select>
   
-        <span class="input-group-text">Year</span>
-        <input type="text" name="year" id="year" class="form-control rounded" style="width: 60px;"
+        <span class="input-group-text fw-bold fs-6" style="margin-left: 0.5rem;">Year</span>
+        <input type="text" name="year" id="year" class="form-control rounded fs-6" style="width: 5rem;"
           [(ngModel)]="selectedYear" (keyup)="onFilterYear()">
-  
+
+        <button id="next-month" type="button" class="btn btn-primary fw-bold" style="min-width: 3rem; margin-left: 0.25rem;"
+          (click)="onNextMonthClick()">></button>
+
       </div>
       <div class="d-flex flex-fill justify-content-end">
         <button type="button" class="btn btn-copy btn-primary" (click)="copyBills()" [openDelay]="500"
@@ -22,12 +28,13 @@
           <fa-icon [icon]="faCopy"></fa-icon>
         </button>
       </div>
+      
     </div>
   
     <!-- ###### Bills ###### -->
   
     <div class="row mt-1 ml-lg-2 mr-lg-2 smaller-font">
-      <p class="fs-5 fw-bold text-warning">Bills</p>
+      <p class="fs-6 fw-bold text-warning">Bills</p>
       <table class="table table-hover mb-2 rounded">
         <caption style="text-align: center;">Total: {{billsTotal | currency:"R$ "}} - Selected: {{selectedBillsTotal | currency: "R$ "}}</caption>
         
@@ -117,7 +124,7 @@
       </div>
   
       <div class="p-2 bd-highlight">
-        <select id="items-per-page" [(ngModel)]="pageSizeBills" (ngModelChange)="loadUser()" class="form-select rounded"
+        <select id="items-per-page" [(ngModel)]="pageSizeBills" (ngModelChange)="loadBillsAndReceivings()" class="form-select rounded"
           aria-label="Select items per page">
           <option value="5">5</option>
           <option value="10">10</option>
@@ -129,7 +136,7 @@
     <!-- ###### Receivings ###### -->
   
     <div class="row mt-1 ml-lg-2 mr-lg-2 smaller-font">
-      <p class="fs-5 fw-bold text-success">Receivings</p>
+      <p class="fs-6 fw-bold text-success">Receivings</p>
       <table class="table table-hover mb-2 rounded">
         <caption style="text-align: center;">Total: {{receivingsTotal | currency:"R$ "}} - Selected: {{selectedReceivingsTotal | currency: "R$ "}}</caption>
         
@@ -219,7 +226,7 @@
       </div>
   
       <div class="p-2 bd-highlight">
-        <select id="items-per-page" [(ngModel)]="pageSizeReceivings" (ngModelChange)="loadUser()" class="form-select rounded"
+        <select id="items-per-page" [(ngModel)]="pageSizeReceivings" (ngModelChange)="loadBillsAndReceivings()" class="form-select rounded"
           aria-label="Select items per page">
           <option value="5">5</option>
           <option value="10">10</option>
