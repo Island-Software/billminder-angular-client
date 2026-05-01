@@ -1,6 +1,6 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -37,50 +37,44 @@ import { ReceivingTypeDetailComponent } from './receiving-type/receiving-type-de
 import { ReceivingRegisterComponent } from './receiving/receiving-register/receiving-register.component';
 import { ReceivingEditComponent } from './receiving/receiving-edit/receiving-edit.component';
 
-@NgModule({
-  imports: [
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    BrowserModule, 
-    BsDatepickerModule.forRoot(),   
-    FontAwesomeModule,
-    FormsModule,
-    HttpClientModule,
-    ModalModule.forRoot(),
-    NgbModule,
-    ReactiveFormsModule,
-    SharedModule
-  ],
-  declarations: [
-    AppComponent,
-    BillListComponent,
-    BillTypeListComponent,
-    BillTypeDetailComponent,
-    BillRegisterComponent,
-    BillTypeRegisterComponent,
-    BillEditComponent,
-    HomeComponent,
-    NavComponent,
-    NotFoundComponent,
-    RegisterComponent,
-    PasswordInputComponent,
-    ServerErrorComponent,
-    TestErrorsComponent,
-    TextInputComponent,
-    EmailValidateComponent,
-    UserEditComponent,
-    ReceivingTypeRegisterComponent,
-    ReceivingTypeListComponent,
-    ReceivingTypeDetailComponent,
-    ReceivingRegisterComponent,
-    ReceivingEditComponent
-  ],
-  providers: [
-    DatePipe,
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: LOCALE_ID, useValue: 'pt'}
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        BillListComponent,
+        BillTypeListComponent,
+        BillTypeDetailComponent,
+        BillRegisterComponent,
+        BillTypeRegisterComponent,
+        BillEditComponent,
+        HomeComponent,
+        NavComponent,
+        NotFoundComponent,
+        RegisterComponent,
+        PasswordInputComponent,
+        ServerErrorComponent,
+        TestErrorsComponent,
+        TextInputComponent,
+        EmailValidateComponent,
+        UserEditComponent,
+        ReceivingTypeRegisterComponent,
+        ReceivingTypeListComponent,
+        ReceivingTypeDetailComponent,
+        ReceivingRegisterComponent,
+        ReceivingEditComponent
+    ],
+    bootstrap: [AppComponent], imports: [AppRoutingModule,
+        BrowserAnimationsModule,
+        BrowserModule,
+        BsDatepickerModule.forRoot(),
+        FontAwesomeModule,
+        FormsModule,
+        ModalModule.forRoot(),
+        NgbModule,
+        ReactiveFormsModule,
+        SharedModule], providers: [
+        DatePipe,
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: LOCALE_ID, useValue: 'pt' },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
