@@ -7,9 +7,10 @@ import { AccountService } from '../services/account.service';
 import { UsersService } from '../services/users.service';
 
 @Component({
-  selector: 'app-user-edit',
-  templateUrl: './user-edit.component.html',
-  styleUrls: ['./user-edit.component.css']
+    selector: 'app-user-edit',
+    templateUrl: './user-edit.component.html',
+    styleUrls: ['./user-edit.component.css'],
+    standalone: false
 })
 export class UserEditComponent implements OnInit {
   editUserForm = this.formBuilder.group({

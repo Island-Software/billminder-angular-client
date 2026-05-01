@@ -3,9 +3,10 @@ import { BillType } from '../../models/bill-type';
 import { BillTypesService } from '../../services/bill-types.service';
 
 @Component({
-  selector: 'app-bill-type-detail',
-  templateUrl: './bill-type-detail.component.html',
-  styleUrls: ['./bill-type-detail.component.css']
+    selector: 'app-bill-type-detail',
+    templateUrl: './bill-type-detail.component.html',
+    styleUrls: ['./bill-type-detail.component.css'],
+    standalone: false
 })
 export class BillTypeDetailComponent implements OnInit {
   @Input() billType?: BillType;

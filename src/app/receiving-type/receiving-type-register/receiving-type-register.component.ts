@@ -4,9 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
 
 @Component({
-  selector: 'app-receiving-type-register',
-  templateUrl: './receiving-type-register.component.html',
-  styleUrls: ['./receiving-type-register.component.css']
+    selector: 'app-receiving-type-register',
+    templateUrl: './receiving-type-register.component.html',
+    styleUrls: ['./receiving-type-register.component.css'],
+    standalone: false
 })
 export class ReceivingTypeRegisterComponent implements OnInit {
   @Output() addReceivingTypeEvent = new EventEmitter<boolean>();

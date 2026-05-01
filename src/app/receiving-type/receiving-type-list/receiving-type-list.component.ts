@@ -6,9 +6,10 @@ import { ReceivingTypesService } from 'src/app/services/receiving-types.service'
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
-  selector: 'app-receiving-type-list',
-  templateUrl: './receiving-type-list.component.html',
-  styleUrls: ['./receiving-type-list.component.css']
+    selector: 'app-receiving-type-list',
+    templateUrl: './receiving-type-list.component.html',
+    styleUrls: ['./receiving-type-list.component.css'],
+    standalone: false
 })
 export class ReceivingTypeListComponent implements OnInit {
   originalReceivingTypes: ReceivingType[] = [];

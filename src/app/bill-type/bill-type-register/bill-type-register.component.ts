@@ -4,9 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 import { BillTypesService } from '../../services/bill-types.service';
 
 @Component({
-  selector: 'app-bill-type-register',
-  templateUrl: './bill-type-register.component.html',
-  styleUrls: ['./bill-type-register.component.css']
+    selector: 'app-bill-type-register',
+    templateUrl: './bill-type-register.component.html',
+    styleUrls: ['./bill-type-register.component.css'],
+    standalone: false
 })
 export class BillTypeRegisterComponent implements OnInit {
   @Output() addBillTypeEvent = new EventEmitter<boolean>();

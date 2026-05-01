@@ -8,9 +8,10 @@ import { BillTypesService } from '../../services/bill-types.service';
 import { BillsService } from '../../services/bills.service';
 
 @Component({
-  selector: 'app-bill-register',
-  templateUrl: './bill-register.component.html',
-  styleUrls: ['./bill-register.component.css']
+    selector: 'app-bill-register',
+    templateUrl: './bill-register.component.html',
+    styleUrls: ['./bill-register.component.css'],
+    standalone: false
 })
 export class BillRegisterComponent implements OnInit {
   @Output() saveBillEvent = new EventEmitter<boolean>();

@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-test-errors',
-  templateUrl: './test-errors.component.html',
-  styleUrls: ['./test-errors.component.css']
+    selector: 'app-test-errors',
+    templateUrl: './test-errors.component.html',
+    styleUrls: ['./test-errors.component.css'],
+    standalone: false
 })
 export class TestErrorsComponent implements OnInit {
   baseUrl = environment.apiUrl;

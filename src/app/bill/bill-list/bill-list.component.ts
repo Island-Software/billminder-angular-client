@@ -11,9 +11,10 @@ import { Receiving } from 'src/app/models/receiving';
 import { ReceivingService } from 'src/app/services/receiving.service';
 
 @Component({
-  selector: 'app-bill-list',
-  templateUrl: './bill-list.component.html',
-  styleUrls: ['./bill-list.component.css']
+    selector: 'app-bill-list',
+    templateUrl: './bill-list.component.html',
+    styleUrls: ['./bill-list.component.css'],
+    standalone: false
 })
 export class BillListComponent implements OnInit {
   bills: Bill[] = [];

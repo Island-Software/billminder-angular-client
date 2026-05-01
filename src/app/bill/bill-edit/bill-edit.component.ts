@@ -3,9 +3,10 @@ import { Bill } from 'src/app/models/bill';
 import { BillsService } from 'src/app/services/bills.service';
 
 @Component({
-  selector: 'app-bill-edit',
-  templateUrl: './bill-edit.component.html',
-  styleUrls: ['./bill-edit.component.css']
+    selector: 'app-bill-edit',
+    templateUrl: './bill-edit.component.html',
+    styleUrls: ['./bill-edit.component.css'],
+    standalone: false
 })
 export class BillEditComponent implements OnInit {
   @Input() bill?: any;

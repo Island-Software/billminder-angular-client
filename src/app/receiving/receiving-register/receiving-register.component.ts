@@ -8,9 +8,10 @@ import { ReceivingTypesService } from 'src/app/services/receiving-types.service'
 import { ReceivingService } from 'src/app/services/receiving.service';
 
 @Component({
-  selector: 'app-receiving-register',
-  templateUrl: './receiving-register.component.html',
-  styleUrls: ['./receiving-register.component.css']
+    selector: 'app-receiving-register',
+    templateUrl: './receiving-register.component.html',
+    styleUrls: ['./receiving-register.component.css'],
+    standalone: false
 })
 export class ReceivingRegisterComponent implements OnInit {
   @Output() saveReceivingEvent = new EventEmitter<boolean>();

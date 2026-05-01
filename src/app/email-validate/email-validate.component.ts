@@ -3,9 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { AccountService } from '../services/account.service';
 
 @Component({
-  selector: 'app-email-validated',
-  templateUrl: './email-validate.component.html',
-  styleUrls: ['./email-validate.component.css']
+    selector: 'app-email-validated',
+    templateUrl: './email-validate.component.html',
+    styleUrls: ['./email-validate.component.css'],
+    standalone: false
 })
 export class EmailValidateComponent implements OnInit {
   validated: boolean = false;

@@ -6,9 +6,10 @@ import { BillTypesService } from '../../services/bill-types.service';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
-  selector: 'app-bill-type-list',
-  templateUrl: './bill-type-list.component.html',
-  styleUrls: ['./bill-type-list.component.css']
+    selector: 'app-bill-type-list',
+    templateUrl: './bill-type-list.component.html',
+    styleUrls: ['./bill-type-list.component.css'],
+    standalone: false
 })
 export class BillTypeListComponent implements OnInit {
   originalBillTypes: BillType[] = [];

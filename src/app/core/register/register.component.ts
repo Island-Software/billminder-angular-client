@@ -4,9 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../../services/account.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css'],
+    standalone: false
 })
 export class RegisterComponent implements OnInit {
   // Property to receive data from parent component
