@@ -1,41 +1,45 @@
 <nav class="navbar navbar-expand-lg bg-success">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold" routerLink='/' routerLinkActive='active' (click)="closeMenu()">Billminder</a>
-        <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
-            &#9776;
-        </button>
-        <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
-                <!-- ng-container is a better option to show/hide things because it doesn't generate HTML -->
-                <ng-container *ngIf="accountService.currentUser$ | async">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink='/bills' routerLinkActive='active' (click)="closeMenu()">Bills & Receivings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink='/bill-type-list' routerLinkActive='active' (click)="closeMenu()">Bill types</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink='/receiving-type-list' routerLinkActive='active' (click)="closeMenu()">Receiving types</a>
-                    </li>
-                </ng-container>
-            </ul>
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" routerLink='/' routerLinkActive='active' (click)="closeMenu()">Billminder</a>
+    <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+      &#9776;
+    </button>
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+        <!-- ng-container is a better option to show/hide things because it doesn't generate HTML -->
+        @if (accountService.currentUser$ | async) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink='/bills' routerLinkActive='active' (click)="closeMenu()">Bills & Receivings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink='/bill-type-list' routerLinkActive='active' (click)="closeMenu()">Bill types</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink='/receiving-type-list' routerLinkActive='active' (click)="closeMenu()">Receiving types</a>
+          </li>
+        }
+      </ul>
 
-            <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-                <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.username | titlecase}}</a>
-                <div class="dropdown-menu mt-3" *dropdownMenu>
-                    <a class="dropdown-item" routerLink="/user-edit">Edit Profile</a>
-                    <div class="dropdown-dividir"></div>
-                    <a class="dropdown-item" (click)="logout()">Logout</a>
-                </div>
-            </div>
-            <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex mt-2 mt-md-0" (ngSubmit)="login()" autocomplete="off">
-                <input name="username" [(ngModel)]="model.username" class="form-control mr-sm-2 rounded-3 me-2" type="text"
-                    placeholder="Username">
-                <input name="password" [(ngModel)]="model.password" class="form-control mr-sm-2 rounded-3 me-2" type="password"
-                    placeholder="Password">
-                <button class="btn bg-light fw-bold" type="submit">Login</button>
-            </form>
+      @if ((accountService.currentUser$ | async); as user) {
+        <div class="dropdown" dropdown>
+          <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.username | titlecase}}</a>
+          <div class="dropdown-menu mt-3" *dropdownMenu>
+            <a class="dropdown-item" routerLink="/user-edit">Edit Profile</a>
+            <div class="dropdown-dividir"></div>
+            <a class="dropdown-item" (click)="logout()">Logout</a>
+          </div>
         </div>
-            
-    </div>
-</nav>
+      }
+      @if ((accountService.currentUser$ | async) === null) {
+        <form #loginForm="ngForm" class="d-flex mt-2 mt-md-0" (ngSubmit)="login()" autocomplete="off">
+          <input name="username" [(ngModel)]="model.username" class="form-control mr-sm-2 rounded-3 me-2" type="text"
+            placeholder="Username">
+            <input name="password" [(ngModel)]="model.password" class="form-control mr-sm-2 rounded-3 me-2" type="password"
+              placeholder="Password">
+              <button class="btn bg-light fw-bold" type="submit">Login</button>
+            </form>
+          }
+        </div>
+
+      </div>
+    </nav>

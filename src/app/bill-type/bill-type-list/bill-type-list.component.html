@@ -5,36 +5,41 @@
         <span class="input-group-text">Filter</span>
         <input type="text" class="form-control rounded" placeholder="Type to search" aria-label="Filter by description"
           [(ngModel)]="searchText" (keyup)="onFilter()">
+        </div>
+
+        <div class="list-group mt-2">
+          @for (billType of billTypes; track billType) {
+            <div>
+              <div class="d-flex flex-row-reverse bd-highlight mt-1">
+                <button type="button" class="btn btn-grid btn-danger ms-1" (click)="deleteBillType(billType)">
+                  <fa-icon [icon]="faDelete"></fa-icon>
+                </button>
+                <button type="button" class="list-group-item list-group-item-action rounded"
+                (click)="onSelect(billType)">{{billType.description}}</button>
+              </div>
+            </div>
+          }
+          @if (loading) {
+            <div class="spinner-border text-primary ml-2" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          }
+        </div>
+
+        <button type="button" class="btn btn-success mt-3" (click)="openModal(billTypeAdd)">Add bill type</button>
+
       </div>
-
-      <div class="list-group mt-2">
-        <div *ngFor="let billType of billTypes">
-          <div class="d-flex flex-row-reverse bd-highlight mt-1">
-            <button type="button" class="btn btn-grid btn-danger ms-1" (click)="deleteBillType(billType)">
-              <fa-icon [icon]="faDelete"></fa-icon>
-            </button>
-
-            <button type="button" class="list-group-item list-group-item-action rounded"
-              (click)="onSelect(billType)">{{billType.description}}</button>
+      <div class="col">
+        @if (selectedBillType) {
+          <div class="row shadow p-3 mb-2 bg-body rounded">
+            <app-bill-type-detail [billType]="selectedBillType"
+            (saveBillTypeEvent)="closeChild($event)"></app-bill-type-detail>
           </div>
-        </div>
-        <div *ngIf="loading" class="spinner-border text-primary ml-2" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-
-      <button type="button" class="btn btn-success mt-3" (click)="openModal(billTypeAdd)">Add bill type</button>
-
-    </div>
-    <div class="col">
-      <div *ngIf="selectedBillType" class="row shadow p-3 mb-2 bg-body rounded">
-        <app-bill-type-detail [billType]="selectedBillType"
-          (saveBillTypeEvent)="closeChild($event)"></app-bill-type-detail>
+        }
       </div>
     </div>
   </div>
-</div>
 
-<ng-template #billTypeAdd>
-  <app-bill-type-register (addBillTypeEvent)="closeModal($event)"></app-bill-type-register>
-</ng-template>
+  <ng-template #billTypeAdd>
+    <app-bill-type-register (addBillTypeEvent)="closeModal($event)"></app-bill-type-register>
+  </ng-template>

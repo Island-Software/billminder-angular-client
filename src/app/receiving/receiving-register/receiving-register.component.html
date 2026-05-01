@@ -13,7 +13,9 @@
       <select id="select-type" [class.is-invalid]='newReceivingForm.get("typeId")?.errors && newReceivingForm.get("typeId")?.touched'
         class="form-control rounded" formControlName="typeId">
         <option value="" disabled>--- Select type ---</option>
-        <option *ngFor="let receivingType of receivingTypes" [value]="receivingType.id">{{receivingType.description}}</option>
+        @for (receivingType of receivingTypes; track receivingType) {
+          <option [value]="receivingType.id">{{receivingType.description}}</option>
+        }
       </select>
       <div class="invalid-feedback">Please select a type</div>
     </div>
@@ -27,25 +29,29 @@
       <input class="form-control w-25" bsDatepicker [formControl]='newReceivingForm.controls["dueDate"]'
         (bsValueChange)="onValueChange($event)"
         [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }">
-    </div>
+      </div>
 
-    <div class="form-group" style="padding-top: 15px;">
-      <label>Register date</label>
-      <div class="input-group">
-        <select 
-          [class.is-invalid]='newReceivingForm.get("month")?.errors && newReceivingForm.get("month")?.touched'
-          class="form-control rounded me-2" 
-          formControlName="month">
+      <div class="form-group" style="padding-top: 15px;">
+        <label>Register date</label>
+        <div class="input-group">
+          <select
+            [class.is-invalid]='newReceivingForm.get("month")?.errors && newReceivingForm.get("month")?.touched'
+            class="form-control rounded me-2"
+            formControlName="month">
           <option value="" disabled>--- Select month ---</option>
-          <option *ngFor="let month of months" [value]="month.id">{{month.name}}</option>
+          @for (month of months; track month) {
+            <option [value]="month.id">{{month.name}}</option>
+          }
         </select>
-        <app-text-input 
+        <app-text-input
           [formControl]='newReceivingForm.controls["year"]'
-          additionalClasses="w-50" 
+          additionalClasses="w-50"
           [label]='"Year"'>
         </app-text-input>
-        <div *ngIf="newReceivingForm.get('month')?.hasError('required') && newReceivingForm.get('month')?.touched"
+        @if (newReceivingForm.get('month')?.hasError('required') && newReceivingForm.get('month')?.touched) {
+          <div
           class="invalid-feedback">Please enter the month</div>
+        }
       </div>
     </div>
     <button class="btn btn-success mr-1 mt-3 me-1" type="submit" [disabled]="!newReceivingForm.valid">Add</button>
@@ -53,5 +59,5 @@
 
   </form>
   <!-- <p>Form value: {{newReceivingForm.value | json}}</p>
-    <p>Form status: {{newReceivingForm.status | json}}</p> -->
+  <p>Form status: {{newReceivingForm.status | json}}</p> -->
 </div>
