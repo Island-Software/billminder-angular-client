@@ -4,12 +4,13 @@ import { ToastrService } from 'ngx-toastr';
 import { BillType } from '../../models/bill-type';
 import { BillTypesService } from '../../services/bill-types.service';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-bill-type-list',
+    imports: [FormsModule],
     templateUrl: './bill-type-list.component.html',
-    styleUrls: ['./bill-type-list.component.css'],
-    standalone: false
+    styleUrls: ['./bill-type-list.component.css']
 })
 export class BillTypeListComponent implements OnInit {
   originalBillTypes: BillType[] = [];

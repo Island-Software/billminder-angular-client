@@ -1,17 +1,19 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { MONTHS } from 'src/app/consts/months';
+import { TextInputComponent } from 'src/app/forms/text-input/text-input.component';
 import { ReceivingType } from 'src/app/models/receiving-type';
 import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
 import { ReceivingService } from 'src/app/services/receiving.service';
 
 @Component({
     selector: 'app-receiving-register',
+    imports: [ReactiveFormsModule, BsDatepickerModule, TextInputComponent],
     templateUrl: './receiving-register.component.html',
-    styleUrls: ['./receiving-register.component.css'],
-    standalone: false
+    styleUrls: ['./receiving-register.component.css']
 })
 export class ReceivingRegisterComponent implements OnInit {
   @Output() saveReceivingEvent = new EventEmitter<boolean>();

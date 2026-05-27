@@ -1,13 +1,14 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { BillTypesService } from '../../services/bill-types.service';
+import { TextInputComponent } from 'src/app/forms/text-input/text-input.component';
 
 @Component({
     selector: 'app-bill-type-register',
+    imports: [FormsModule, ReactiveFormsModule, TextInputComponent],
     templateUrl: './bill-type-register.component.html',
-    styleUrls: ['./bill-type-register.component.css'],
-    standalone: false
+    styleUrls: ['./bill-type-register.component.css']
 })
 export class BillTypeRegisterComponent implements OnInit {
   @Output() addBillTypeEvent = new EventEmitter<boolean>();

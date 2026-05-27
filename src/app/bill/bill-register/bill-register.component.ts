@@ -1,17 +1,19 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MONTHS } from '../../consts/months';
 import { BillType } from '../../models/bill-type';
 import { BillTypesService } from '../../services/bill-types.service';
 import { BillsService } from '../../services/bills.service';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TextInputComponent } from 'src/app/forms/text-input/text-input.component';
 
 @Component({
     selector: 'app-bill-register',
+    imports: [FormsModule, ReactiveFormsModule, BsDatepickerModule, TextInputComponent],
     templateUrl: './bill-register.component.html',
-    styleUrls: ['./bill-register.component.css'],
-    standalone: false
+    styleUrls: ['./bill-register.component.css']
 })
 export class BillRegisterComponent implements OnInit {
   @Output() saveBillEvent = new EventEmitter<boolean>();

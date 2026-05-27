@@ -1,13 +1,14 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { TextInputComponent } from 'src/app/forms/text-input/text-input.component';
 import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
 
 @Component({
     selector: 'app-receiving-type-register',
+    imports: [ReactiveFormsModule, TextInputComponent],
     templateUrl: './receiving-type-register.component.html',
-    styleUrls: ['./receiving-type-register.component.css'],
-    standalone: false
+    styleUrls: ['./receiving-type-register.component.css']
 })
 export class ReceivingTypeRegisterComponent implements OnInit {
   @Output() addReceivingTypeEvent = new EventEmitter<boolean>();

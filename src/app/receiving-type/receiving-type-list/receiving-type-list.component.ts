@@ -4,12 +4,13 @@ import { ToastrService } from 'ngx-toastr';
 import { ReceivingType } from 'src/app/models/receiving-type';
 import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-receiving-type-list',
+    imports: [FormsModule],
     templateUrl: './receiving-type-list.component.html',
-    styleUrls: ['./receiving-type-list.component.css'],
-    standalone: false
+    styleUrls: ['./receiving-type-list.component.css']
 })
 export class ReceivingTypeListComponent implements OnInit {
   originalReceivingTypes: ReceivingType[] = [];

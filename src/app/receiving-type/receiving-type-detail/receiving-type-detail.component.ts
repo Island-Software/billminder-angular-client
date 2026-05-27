@@ -5,8 +5,7 @@ import { ReceivingTypesService } from 'src/app/services/receiving-types.service'
 @Component({
     selector: 'app-receiving-type-detail',
     templateUrl: './receiving-type-detail.component.html',
-    styleUrls: ['./receiving-type-detail.component.css'],
-    standalone: false
+    styleUrls: ['./receiving-type-detail.component.css']
 })
 export class ReceivingTypeDetailComponent implements OnInit {
   @Input() receivingType?: ReceivingType;
