@@ -2,10 +2,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
     selector: 'app-home',
-    imports: [CommonModule],
+    imports: [CommonModule, RegisterComponent],
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })

@@ -10,22 +10,20 @@ import { Receiving } from 'src/app/models/receiving';
 import { ReceivingService } from 'src/app/services/receiving.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CurrencyPipe } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from 'src/app/app-routing.module';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @Component({
   selector: 'app-bill-list',
   imports: [
     FormsModule, 
+    ReactiveFormsModule,
     FontAwesomeModule, 
     CurrencyPipe, 
-    ReactiveFormsModule,
-    BrowserModule,
+    CommonModule,
     NgbModule,
+    PaginationModule
   ],
   templateUrl: './bill-list.component.html',
   styleUrls: ['./bill-list.component.css']
@@ -129,18 +127,27 @@ export class BillListComponent implements OnInit {
 
   loadBillsAndReceivings() {
     this.loading = true;
+    
     this.username = JSON.parse(localStorage.getItem('user')!).username;
-    this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumberBills, this.pageSizeBills).subscribe(bills => {
+    
+    this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumberBills, this.pageSizeBills).subscribe(bills => {            
       this.bills = bills.result;
+      console.log('bills: ', bills.result);
+      
+      
       this.paginationBills = bills.pagination;
+      console.log('paginated bills: ', this.paginationBills);
+      
+      
       this.loading = false;
     });
 
     this.receivingService.get(this.username, this.selectedMonth, this.selectedYear, this.pageNumberReceivings, this.pageSizeReceivings).subscribe(receivings => {
       this.receivings = receivings.result;
+      
       this.paginationReceivings = receivings.pagination;
+      
       this.loading = false;
-
     });
 
     this.updateTotal();

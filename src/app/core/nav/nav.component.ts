@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AccountService } from '../../services/account.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-nav',
-    imports: [NgbModule, CommonModule, BsDropdownModule, FormsModule],
+    imports: [NgbModule, CommonModule, BsDropdownModule, FormsModule, RouterModule],
     templateUrl: './nav.component.html',
     styleUrls: ['./nav.component.css']
 })

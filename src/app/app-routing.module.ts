@@ -36,9 +36,3 @@ export const routes: Routes = [
   // ** = invalid route
   {path: '**', component: NotFoundComponent, pathMatch: 'full'}
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
