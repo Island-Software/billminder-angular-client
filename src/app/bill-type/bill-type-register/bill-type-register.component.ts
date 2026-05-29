@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup,
 import { ToastrService } from 'ngx-toastr';
 import { BillTypesService } from '../../services/bill-types.service';
 import { TextInputComponent } from 'src/app/forms/text-input/text-input.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-bill-type-register',
@@ -15,7 +16,8 @@ export class BillTypeRegisterComponent implements OnInit {
   newBillTypeForm!: UntypedFormGroup;
 
   constructor(private billTypeService: BillTypesService,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService,
+    private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -40,9 +42,11 @@ export class BillTypeRegisterComponent implements OnInit {
 
   close() {
     this.addBillTypeEvent.emit(false);
+    this.activeModal.close(false);
   }
 
   closeAndReloadParent() {
     this.addBillTypeEvent.emit(true);
+    this.activeModal.close(true);
   }
 }

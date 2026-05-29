@@ -19,14 +19,14 @@
               </div>
             </div>
           }
-          @if (loading) {
+          @if (loading()) {
             <div class="spinner-border text-primary ml-2" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
           }
         </div>
 
-        <button type="button" class="btn btn-success mt-3" (click)="openModal(billTypeAdd)">Add bill type</button>
+        <button type="button" class="btn btn-success mt-3" (click)="openModal()">Add bill type</button>
 
       </div>
       <div class="col">
@@ -39,7 +39,3 @@
       </div>
     </div>
   </div>
-
-  <ng-template #billTypeAdd>
-    <app-bill-type-register (addBillTypeEvent)="closeModal($event)"></app-bill-type-register>
-  </ng-template>

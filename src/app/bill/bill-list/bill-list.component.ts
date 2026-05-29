@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, signal, TemplateRef } from '@angular/core';
 import { Bill } from '../../models/bill';
 import { Pagination } from '../../models/pagination';
 import { BillsService } from '../../services/bills.service';
@@ -44,7 +44,7 @@ export class BillListComponent implements OnInit {
   months = MONTHS;
   selectedMonth: number;
   selectedYear: number;
-  loading: boolean;
+  loading = signal(false);
   faDelete = faTrashCan;
   faAdd = faSquarePlus;
   faCopy = faCopy;
@@ -61,7 +61,6 @@ export class BillListComponent implements OnInit {
     private toastrServie: ToastrService) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
-    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -126,20 +125,16 @@ export class BillListComponent implements OnInit {
   }
 
   loadBillsAndReceivings() {
-    this.loading = true;
+    this.loading.set(true);
     
     this.username = JSON.parse(localStorage.getItem('user')!).username;
     
     this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumberBills, this.pageSizeBills).subscribe(bills => {            
       this.bills = bills.result;
-      console.log('bills: ', bills.result);
-      
       
       this.paginationBills = bills.pagination;
-      console.log('paginated bills: ', this.paginationBills);
       
-      
-      this.loading = false;
+      this.loading.set(false);
     });
 
     this.receivingService.get(this.username, this.selectedMonth, this.selectedYear, this.pageNumberReceivings, this.pageSizeReceivings).subscribe(receivings => {
@@ -147,7 +142,7 @@ export class BillListComponent implements OnInit {
       
       this.paginationReceivings = receivings.pagination;
       
-      this.loading = false;
+      this.loading.set(false);
     });
 
     this.updateTotal();

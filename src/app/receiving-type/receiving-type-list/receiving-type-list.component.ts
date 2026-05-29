@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, signal, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ReceivingType } from 'src/app/models/receiving-type';
@@ -18,13 +18,13 @@ export class ReceivingTypeListComponent implements OnInit {
   searchText: string = "";
   selectedReceivingType?: ReceivingType;
   modalRef!: BsModalRef;
-  loading: boolean;
+  loading = signal(false);
   faDelete = faTrashCan;
 
   constructor(private receivingTypeService: ReceivingTypesService,
     private modalService: BsModalService,
     private toastrService: ToastrService) {
-    this.loading = false;
+    this.loading.set(false);
   }
 
   onSelect(receivingType: ReceivingType): void {
@@ -59,14 +59,14 @@ export class ReceivingTypeListComponent implements OnInit {
   }
 
   loadReceivingTypes() {
-    this.loading = true;
+    this.loading.set(true);
     this.receivingTypeService.getReceivingTypes()
       .subscribe(rts => {
         console.log(rts);
         
         this.receivingTypes = rts;
         this.originalReceivingTypes = rts;
-        this.loading = false;
+        this.loading.set(false);
       });
   }
 

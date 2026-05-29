@@ -91,7 +91,7 @@
               </tbody>
             </table>
 
-            @if (loading) {
+            @if (loading()) {
               <div class="spinner-border text-primary ml-2" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
@@ -116,7 +116,7 @@
           </div>
 
           <div class="d-flex bd-highlight">
-            @if (paginationBills) {
+            @if (paginationBills?.totalItems > 0) {
               <div class="ms-auto">
                 <pagination [boundaryLinks]="true" [totalItems]="paginationBills.totalItems" [itemsPerPage]="paginationBills.itemsPerPage"
                   [(ngModel)]="paginationBills.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
@@ -197,7 +197,7 @@
                   </tbody>
                 </table>
 
-                @if (loading) {
+                @if (loading()) {
                   <div class="spinner-border text-primary ml-2" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
@@ -222,7 +222,7 @@
               </div>
 
               <div class="d-flex bd-highlight">
-                @if (paginationReceivings) {
+                @if (paginationReceivings?.totalItems > 0) {
                   <div class="ms-auto">
                     <pagination [boundaryLinks]="true" [totalItems]="paginationReceivings.totalItems" [itemsPerPage]="paginationReceivings.itemsPerPage"
                       [(ngModel)]="paginationReceivings.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"

@@ -1,31 +1,31 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ChangeDetectionStrategy, Component, OnInit, signal, TemplateRef } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { BillType } from '../../models/bill-type';
 import { BillTypesService } from '../../services/bill-types.service';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FormsModule } from '@angular/forms';
+import { BillTypeRegisterComponent } from '../bill-type-register/bill-type-register.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
     selector: 'app-bill-type-list',
-    imports: [FormsModule],
+    imports: [FormsModule, FontAwesomeModule],
     templateUrl: './bill-type-list.component.html',
-    styleUrls: ['./bill-type-list.component.css']
+    styleUrls: ['./bill-type-list.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class BillTypeListComponent implements OnInit {
   originalBillTypes: BillType[] = [];
   billTypes: BillType[] = [];
   searchText: string = "";
   selectedBillType?: BillType;
-  modalRef!: BsModalRef;
-  loading: boolean;
+  loading = signal(false);
   faDelete = faTrashCan;
   
-  constructor(private billTypeService: BillTypesService, 
-    private modalService: BsModalService,
-    private toastrService: ToastrService) { 
-      this.loading = false;
-    }
+  constructor(private billTypeService: BillTypesService,
+    private ngbModalService: NgbModal,
+    private toastrService: ToastrService) { }
 
   onSelect(billType: BillType): void {
     this.selectedBillType = billType;
@@ -35,8 +35,14 @@ export class BillTypeListComponent implements OnInit {
     this.loadBillTypes();
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  openModal() {
+    const modal = this.ngbModalService.open(BillTypeRegisterComponent, { centered: true });
+    
+     modal.result
+      .then(() => {
+        this.loadBillTypes();
+      })
+      .catch(() => {});
   }
 
   closeChild(value: boolean) {
@@ -52,19 +58,13 @@ export class BillTypeListComponent implements OnInit {
     });
   }
 
-  closeModal(value: boolean) {
-    this.modalRef.hide();
-    if (value)
-      this.loadBillTypes();
-  }
-
   loadBillTypes() {
-    this.loading = true;
+    this.loading.set(true);
     this.billTypeService.getBillTypes()
       .subscribe(bts => {
         this.billTypes = bts;
         this.originalBillTypes = bts;
-        this.loading = false;
+        this.loading.set(false);
       });
   }
 
