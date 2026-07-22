@@ -9,7 +9,6 @@
         <form [formGroup]='newBillTypeForm' (ngSubmit)="add()">
 
             <app-text-input [formControl]='newBillTypeForm.controls["description"]' [label]='"Description"'></app-text-input>            
-            <!-- <app-text-input [formControl]='newBillTypeForm.controls["active"]' [type]='"checkbox"' [label]='"Is Active?"'></app-text-input> -->
 
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="isActive" formControlName="active">

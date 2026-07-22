@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { BillType } from '../../models/bill-type';
@@ -7,10 +7,11 @@ import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FormsModule } from '@angular/forms';
 import { BillTypeRegisterComponent } from '../bill-type-register/bill-type-register.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BillTypeDetailComponent } from '../bill-type-detail/bill-type-detail.component';
 
 @Component({
     selector: 'app-bill-type-list',
-    imports: [FormsModule, FontAwesomeModule],
+    imports: [FormsModule, FontAwesomeModule, BillTypeDetailComponent],
     templateUrl: './bill-type-list.component.html',
     styleUrls: ['./bill-type-list.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
@@ -38,16 +39,15 @@ export class BillTypeListComponent implements OnInit {
   openModal() {
     const modal = this.ngbModalService.open(BillTypeRegisterComponent, { centered: true });
     
-     modal.result
-      .then(() => {
+     modal.result.then(() => {
         this.loadBillTypes();
-      })
-      .catch(() => {});
+      }).catch(() => {});
   }
 
   closeChild(value: boolean) {
     if (value) {
       this.selectedBillType = undefined;
+      this.loadBillTypes();
     }
   }
 

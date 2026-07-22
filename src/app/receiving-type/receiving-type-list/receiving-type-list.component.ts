@@ -1,31 +1,31 @@
-import { Component, OnInit, signal, TemplateRef } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ReceivingType } from 'src/app/models/receiving-type';
 import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FormsModule } from '@angular/forms';
+import { ReceivingTypeRegisterComponent } from '../receiving-type-register/receiving-type-register.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
     selector: 'app-receiving-type-list',
-    imports: [FormsModule],
+    imports: [FormsModule, FontAwesomeModule],
     templateUrl: './receiving-type-list.component.html',
-    styleUrls: ['./receiving-type-list.component.css']
+    styleUrls: ['./receiving-type-list.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ReceivingTypeListComponent implements OnInit {
   originalReceivingTypes: ReceivingType[] = [];
   receivingTypes: ReceivingType[] = [];
   searchText: string = "";
   selectedReceivingType?: ReceivingType;
-  modalRef!: BsModalRef;
   loading = signal(false);
   faDelete = faTrashCan;
 
   constructor(private receivingTypeService: ReceivingTypesService,
-    private modalService: BsModalService,
-    private toastrService: ToastrService) {
-    this.loading.set(false);
-  }
+    private ngbModalService: NgbModal,
+    private toastrService: ToastrService) { }
 
   onSelect(receivingType: ReceivingType): void {
     this.selectedReceivingType = receivingType;
@@ -35,8 +35,12 @@ export class ReceivingTypeListComponent implements OnInit {
     this.loadReceivingTypes();
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  openModal() {
+    const modal = this.ngbModalService.open(ReceivingTypeRegisterComponent, { centered: true });
+    
+    modal.result.then(() => {
+      this.loadReceivingTypes();
+    }).catch(() => {});
   }
 
   closeChild(value: boolean) {
@@ -52,18 +56,10 @@ export class ReceivingTypeListComponent implements OnInit {
     });
   }
 
-  closeModal(value: boolean) {
-    this.modalRef.hide();
-    if (value)
-      this.loadReceivingTypes();
-  }
-
   loadReceivingTypes() {
     this.loading.set(true);
     this.receivingTypeService.getReceivingTypes()
       .subscribe(rts => {
-        console.log(rts);
-        
         this.receivingTypes = rts;
         this.originalReceivingTypes = rts;
         this.loading.set(false);
