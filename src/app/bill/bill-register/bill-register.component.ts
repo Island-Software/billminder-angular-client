@@ -8,11 +8,13 @@ import { BillTypesService } from '../../services/bill-types.service';
 import { BillsService } from '../../services/bills.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TextInputComponent } from 'src/app/forms/text-input/text-input.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-bill-register',
     imports: [FormsModule, ReactiveFormsModule, BsDatepickerModule, TextInputComponent],
     templateUrl: './bill-register.component.html',
+    providers: [DatePipe],
     styleUrls: ['./bill-register.component.css']
 })
 export class BillRegisterComponent implements OnInit {
@@ -22,7 +24,10 @@ export class BillRegisterComponent implements OnInit {
   newBillForm!: UntypedFormGroup;
   months = MONTHS;
 
-  constructor(private billsService: BillsService, private billTypesService: BillTypesService, private toastrService: ToastrService,
+  constructor(private billsService: BillsService, 
+    private billTypesService: BillTypesService, 
+    private toastrService: ToastrService,
+    private activeModal: NgbActiveModal,
     public datePipe : DatePipe) { }
 
   ngOnInit(): void {
@@ -64,10 +69,12 @@ export class BillRegisterComponent implements OnInit {
 
   close() {
     this.saveBillEvent.emit(false);
+    this.activeModal.close(false);
   }
 
   closeAndReloadParent() {
     this.saveBillEvent.emit(true);
+    this.activeModal.close(true);
   }
 
   onValueChange(value: Date): void {

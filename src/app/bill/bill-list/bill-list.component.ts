@@ -11,8 +11,10 @@ import { ReceivingService } from 'src/app/services/receiving.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { BillRegisterComponent } from '../bill-register/bill-register.component';
+import { ReceivingRegisterComponent } from 'src/app/receiving/receiving-register/receiving-register.component';
 
 @Component({
   selector: 'app-bill-list',
@@ -58,7 +60,7 @@ export class BillListComponent implements OnInit {
   checkAllReceivingsState: boolean = false;
 
   constructor(private billsService: BillsService, private receivingService: ReceivingService, private modalService: BsModalService,
-    private toastrServie: ToastrService) {
+    private ngbModalService: NgbModal, private toastrServie: ToastrService) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
   }
@@ -99,8 +101,20 @@ export class BillListComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  openModalBill() {
+    const modal = this.ngbModalService.open(BillRegisterComponent, { centered: true });
+
+    modal.result.then(() => {
+      // this.loadBillsAndReceivings();
+    }).catch(() => {});
+  }
+
+  openModalReceiving() {
+    const modal = this.ngbModalService.open(ReceivingRegisterComponent, { centered: true });
+
+    modal.result.then(() => {
+      // this.loadBillsAndReceivings();
+    }).catch(() => {});
   }
 
   closeModal(value: boolean) {

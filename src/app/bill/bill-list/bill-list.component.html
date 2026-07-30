@@ -80,7 +80,7 @@
                     <td><a style="color: blue; cursor: pointer;"
                     (click)="openModalForEdit(billEdit, bill)">{{bill.billType.description}}</a></td>
                     <td>{{bill.value | currency:"R$ "}}</td>
-                    <td>{{bill.dueDate | date:'dd/MM/YYYY'}}</td>
+                    <td>{{bill.dueDate | date:'dd/MM/yyyy'}}</td>
                     <td style="text-align: start">
                       <button class="btn btn-grid btn-danger" (click)="deleteBill(bill)">
                         <fa-icon [icon]="faDelete"></fa-icon>
@@ -100,7 +100,7 @@
 
           <div class="d-flex bd-highlight mb-3">
             <div class="bd-highlight">
-              <button type="button" class="btn btn-add btn-warning fw-bold" (click)="openModal(billAdd)" [openDelay]="500"
+              <button type="button" class="btn btn-add btn-warning fw-bold" (click)="openModalBill()" [openDelay]="500"
                 ngbTooltip="Add new bill">Add bill
                 <fa-icon class="ms-2" [icon]="faAdd"></fa-icon>
               </button>
@@ -186,7 +186,7 @@
                         <td><a style="color: blue; cursor: pointer;"
                         (click)="openModalForEdit(receivingEdit, receiving)">{{receiving.receivingType.description}}</a></td>
                         <td>{{receiving.value | currency:"R$ "}}</td>
-                        <td>{{receiving.receivedDate | date:'dd/MM/YYYY'}}</td>
+                        <td>{{receiving.receivedDate | date:'dd/MM/yyyy'}}</td>
                         <td style="text-align: start">
                           <button class="btn btn-grid btn-danger" (click)="deleteReceiving(receiving)">
                             <fa-icon [icon]="faDelete"></fa-icon>
@@ -206,7 +206,7 @@
 
               <div class="d-flex bd-highlight mb-3">
                 <div class="bd-highlight">
-                  <button type="button" class="btn btn-add btn-success fw-bold" (click)="openModal(receivingAdd)" [openDelay]="500"
+                  <button type="button" class="btn btn-add btn-success fw-bold" (click)="openModalReceiving()" [openDelay]="500"
                     ngbTooltip="Add new receiving">Add receiving
                     <fa-icon class="ms-2" [icon]="faAdd"></fa-icon>
                   </button>
@@ -257,7 +257,7 @@
           </div>
 
 
-          <ng-template #billAdd>
+          <!-- <ng-template #billAdd>
             <app-bill-register (saveBillEvent)="closeModal($event)"></app-bill-register>
           </ng-template>
 
@@ -271,4 +271,4 @@
 
           <ng-template #receivingEdit>
             <app-receiving-edit [receiving]="selectedReceiving" (saveReceivingEvent)="closeModal($event)"></app-receiving-edit>
-          </ng-template>
+          </ng-template> -->

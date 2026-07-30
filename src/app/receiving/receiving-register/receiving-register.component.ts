@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { MONTHS } from 'src/app/consts/months';
@@ -13,6 +14,7 @@ import { ReceivingService } from 'src/app/services/receiving.service';
     selector: 'app-receiving-register',
     imports: [ReactiveFormsModule, BsDatepickerModule, TextInputComponent],
     templateUrl: './receiving-register.component.html',
+    providers: [DatePipe],
     styleUrls: ['./receiving-register.component.css']
 })
 export class ReceivingRegisterComponent implements OnInit {
@@ -23,6 +25,7 @@ export class ReceivingRegisterComponent implements OnInit {
   months = MONTHS;
 
   constructor(private billsService: ReceivingService, private receivingTypesService: ReceivingTypesService, private toastrService: ToastrService,
+    private activeModal: NgbActiveModal,
     public datePipe : DatePipe) { }
 
   ngOnInit(): void {
@@ -64,10 +67,12 @@ export class ReceivingRegisterComponent implements OnInit {
 
   close() {
     this.saveReceivingEvent.emit(false);
+    this.activeModal.close(false);
   }
 
   closeAndReloadParent() {
     this.saveReceivingEvent.emit(true);
+    this.activeModal.close(true);
   }
 
   onValueChange(value: Date): void {
