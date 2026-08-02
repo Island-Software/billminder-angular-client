@@ -9,8 +9,8 @@ import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/f
 })
 export class PasswordInputComponent implements ControlValueAccessor {
   @Input() label = '';
-  @Input() type = '';
-  @Input() additionalClasses = '';
+  @Input() type = 'password';
+  @Input() additionalClasses = 'mb-3';
 
   constructor(@Self() public ngControl: NgControl) { 
     this.ngControl.valueAccessor = this;

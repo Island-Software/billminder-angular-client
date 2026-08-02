@@ -2,8 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { TextInputComponent } from 'src/app/forms/text-input/text-input.component';
-import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
+import { TextInputComponent } from '../../forms/text-input/text-input.component';
+import { ReceivingTypesService } from '../../services/receiving-types.service';
 
 @Component({
     selector: 'app-receiving-type-register',

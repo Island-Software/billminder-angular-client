@@ -2,8 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../../services/account.service';
-import { TextInputComponent } from 'src/app/forms/text-input/text-input.component';
-import { PasswordInputComponent } from 'src/app/forms/password-input/password-input.component';
+import { TextInputComponent } from '../../forms/text-input/text-input.component';
+import { PasswordInputComponent } from '../../forms/password-input/password-input.component';
 
 @Component({
     selector: 'app-register',

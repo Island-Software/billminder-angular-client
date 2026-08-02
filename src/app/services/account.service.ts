@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { text } from '@fortawesome/fontawesome-svg-core';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { LoginUser } from '../models/login-user';
 
 @Injectable({

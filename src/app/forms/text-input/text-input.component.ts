@@ -10,7 +10,7 @@ import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/f
 export class TextInputComponent implements ControlValueAccessor {
   @Input() label = '';  
   @Input() type = 'text';
-  @Input() additionalClasses = 'mb-2';
+  @Input() additionalClasses = 'mb-3';
 
   constructor(@Self() public ngControl: NgControl) { 
     this.ngControl.valueAccessor = this;
