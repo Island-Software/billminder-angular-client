@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MONTHS } from '../../consts/months';
@@ -7,15 +7,15 @@ import { BillType } from '../../models/bill-type';
 import { BillTypesService } from '../../services/bill-types.service';
 import { BillsService } from '../../services/bills.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { TextInputComponent } from 'src/app/forms/text-input/text-input.component';
+import { TextInputComponent } from '../../forms/text-input/text-input.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'app-bill-register',
-    imports: [FormsModule, ReactiveFormsModule, BsDatepickerModule, TextInputComponent],
-    templateUrl: './bill-register.component.html',
-    providers: [DatePipe],
-    styleUrls: ['./bill-register.component.css']
+  selector: 'app-bill-register',
+  imports: [FormsModule, ReactiveFormsModule, BsDatepickerModule, TextInputComponent],
+  templateUrl: './bill-register.component.html',
+  providers: [DatePipe],
+  styleUrls: ['./bill-register.component.css']
 })
 export class BillRegisterComponent implements OnInit {
   @Output() saveBillEvent = new EventEmitter<boolean>();
@@ -24,20 +24,24 @@ export class BillRegisterComponent implements OnInit {
   newBillForm!: UntypedFormGroup;
   months = MONTHS;
 
-  constructor(private billsService: BillsService, 
-    private billTypesService: BillTypesService, 
+  constructor(private billsService: BillsService,
+    private billTypesService: BillTypesService,
     private toastrService: ToastrService,
     private activeModal: NgbActiveModal,
-    public datePipe : DatePipe) { }
+    private cdr: ChangeDetectorRef,
+    public datePipe: DatePipe) { }
 
   ngOnInit(): void {
+    this.loadBillTypes();
     this.initializeForm();
-    this.loadBillTypes();    
   }
 
   loadBillTypes() {
     this.billTypesService.getBillTypes().subscribe(
-      bt => this.billTypes = bt
+      bt => {
+        this.billTypes = bt;
+        this.cdr.detectChanges();
+      }
     );
   }
 
@@ -58,7 +62,6 @@ export class BillRegisterComponent implements OnInit {
   }
 
   add() {
-
     this.billsService.createBill(this.newBillForm.value).subscribe(_ => {
       this.toastrService.success("Bill added succesfully");
       this.closeAndReloadParent();
@@ -68,6 +71,7 @@ export class BillRegisterComponent implements OnInit {
   }
 
   close() {
+    console.log("close");
     this.saveBillEvent.emit(false);
     this.activeModal.close(false);
   }
@@ -79,11 +83,11 @@ export class BillRegisterComponent implements OnInit {
 
   onValueChange(value: Date): void {
     if (value === undefined)
-      return    
-    
+      return
+
     value.setHours(0);
     value.setMinutes(0);
-    value.setSeconds(0);    
+    value.setSeconds(0);
   }
 
 }

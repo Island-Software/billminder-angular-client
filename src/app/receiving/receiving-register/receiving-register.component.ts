@@ -4,11 +4,11 @@ import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators }
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
-import { MONTHS } from 'src/app/consts/months';
-import { TextInputComponent } from 'src/app/forms/text-input/text-input.component';
-import { ReceivingType } from 'src/app/models/receiving-type';
-import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
-import { ReceivingService } from 'src/app/services/receiving.service';
+import { MONTHS } from '../../consts/months';
+import { TextInputComponent } from '../../forms/text-input/text-input.component';
+import { ReceivingType } from '../../models/receiving-type';
+import { ReceivingTypesService } from '../../services/receiving-types.service';
+import { ReceivingService } from '../../services/receiving.service';
 
 @Component({
     selector: 'app-receiving-register',

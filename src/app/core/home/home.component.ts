@@ -1,7 +1,7 @@
 // import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from 'src/app/services/account.service';
+import { AccountService } from '../../services/account.service';
 import { RegisterComponent } from '../register/register.component';
 
 @Component({

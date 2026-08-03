@@ -9,14 +9,14 @@
 
 <div class="modal-body">
   <form [formGroup]='newBillForm' (ngSubmit)="add()" autocomplete="off">
-
+    
     <label for="select-type">Type</label>
     <div class="form-group">
       <select id="select-type"
         [class.is-invalid]='newBillForm.get("typeId")?.errors && newBillForm.get("typeId")?.touched'
         class="form-control rounded" formControlName="typeId">
         <option value="" disabled>--- Select type ---</option>
-        @for (billtype of billTypes; track billtype) {
+        @for (billtype of billTypes; track billtype.id) {
         <option [value]="billtype.id">{{billtype.description}}</option>
         }
       </select>

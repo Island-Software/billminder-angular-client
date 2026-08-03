@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { ReceivingType } from 'src/app/models/receiving-type';
-import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
+import { ReceivingType } from '../../models/receiving-type';
+import { ReceivingTypesService } from '../../services/receiving-types.service';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FormsModule } from '@angular/forms';
 import { ReceivingTypeRegisterComponent } from '../receiving-type-register/receiving-type-register.component';

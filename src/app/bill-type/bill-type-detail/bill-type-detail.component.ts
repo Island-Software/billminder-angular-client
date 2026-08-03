@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { BillType } from '../../models/bill-type';
 import { BillTypesService } from '../../services/bill-types.service';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { TextInputComponent } from 'src/app/forms/text-input/text-input.component';
+import { TextInputComponent } from '../../forms/text-input/text-input.component';
 
 @Component({
   selector: 'app-bill-type-detail',

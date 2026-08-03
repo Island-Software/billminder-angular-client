@@ -1,20 +1,20 @@
-import { Component, OnInit, signal, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal, TemplateRef } from '@angular/core';
 import { Bill } from '../../models/bill';
 import { Pagination } from '../../models/pagination';
 import { BillsService } from '../../services/bills.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { MONTHS } from 'src/app/consts/months';
+import { MONTHS } from '../../consts/months';
 import { ToastrService } from 'ngx-toastr';
 import { faCopy, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { Receiving } from 'src/app/models/receiving';
-import { ReceivingService } from 'src/app/services/receiving.service';
+import { Receiving } from '../../models/receiving';
+import { ReceivingService } from '../../services/receiving.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BillRegisterComponent } from '../bill-register/bill-register.component';
-import { ReceivingRegisterComponent } from 'src/app/receiving/receiving-register/receiving-register.component';
+import { ReceivingRegisterComponent } from '../../receiving/receiving-register/receiving-register.component';
 
 @Component({
   selector: 'app-bill-list',
@@ -60,13 +60,14 @@ export class BillListComponent implements OnInit {
   checkAllReceivingsState: boolean = false;
 
   constructor(private billsService: BillsService, private receivingService: ReceivingService, private modalService: BsModalService,
-    private ngbModalService: NgbModal, private toastrServie: ToastrService) {
+    private ngbModalService: NgbModal, private toastrServie: ToastrService, private cdr: ChangeDetectorRef) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
   }
 
   ngOnInit(): void {
     this.loadBillsAndReceivings();
+    this.cdr.detectChanges();
   }
 
   get selectedBillsTotal(): number {
@@ -105,7 +106,7 @@ export class BillListComponent implements OnInit {
     const modal = this.ngbModalService.open(BillRegisterComponent, { centered: true });
 
     modal.result.then(() => {
-      // this.loadBillsAndReceivings();
+      this.loadBillsAndReceivings();
     }).catch(() => {});
   }
 
@@ -113,14 +114,18 @@ export class BillListComponent implements OnInit {
     const modal = this.ngbModalService.open(ReceivingRegisterComponent, { centered: true });
 
     modal.result.then(() => {
-      // this.loadBillsAndReceivings();
+      this.loadBillsAndReceivings();
     }).catch(() => {});
   }
 
   closeModal(value: boolean) {
     this.modalRef.hide();
-    if (value)
+    if (value) {
+      console.log('closing modal');
+      
       this.loadBillsAndReceivings();
+      this.cdr.detectChanges();
+    }
   }
 
   updateTotal() {
@@ -136,6 +141,7 @@ export class BillListComponent implements OnInit {
 
   updateBalance() {
     this.balanceTotal = this.receivingsTotal - this.billsTotal;
+    this.cdr.detectChanges();
   }
 
   loadBillsAndReceivings() {
@@ -149,6 +155,7 @@ export class BillListComponent implements OnInit {
       this.paginationBills = bills.pagination;
       
       this.loading.set(false);
+      this.updateTotal();
     });
 
     this.receivingService.get(this.username, this.selectedMonth, this.selectedYear, this.pageNumberReceivings, this.pageSizeReceivings).subscribe(receivings => {
@@ -157,9 +164,8 @@ export class BillListComponent implements OnInit {
       this.paginationReceivings = receivings.pagination;
       
       this.loading.set(false);
+      this.updateTotal();
     });
-
-    this.updateTotal();
   }
 
   deleteBill(bill: Bill) {
@@ -171,6 +177,7 @@ export class BillListComponent implements OnInit {
   deleteReceiving(receiving: Receiving) {
     if (confirm("Are you sure to delete " + receiving.receivingType.description + "?")) {
       this.receivingService.delete(receiving).subscribe(_ => this.loadBillsAndReceivings());
+      this.loadBillsAndReceivings();
     }
   }
 

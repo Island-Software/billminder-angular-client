@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ReceivingType } from 'src/app/models/receiving-type';
-import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
+import { ReceivingType } from '../../models/receiving-type';
+import { ReceivingTypesService } from '../../services/receiving-types.service';
 
 @Component({
     selector: 'app-receiving-type-detail',
