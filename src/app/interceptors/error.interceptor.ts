@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError } from 'rxjs/operators';
+import { AccountService } from '../services/account.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router, private toastr: ToastrService) {}
+  constructor(private router: Router, private toastr: ToastrService, private accountService: AccountService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError(error => {
+        // console.log('error interceptor', error);
+        // console.log(error.status);
         if (error) {
           switch (error.status) {
             case 400:
@@ -28,8 +26,6 @@ export class ErrorInterceptor implements HttpInterceptor {
                      modalStateErrors.push(error.error.errors[key]);
                    }
                  }
-                //  console.log(modalStateErrors);
-                //  throw modalStateErrors.join(",");
                  throw modalStateErrors.join('\n');
               } else {
                 this.toastr.error(error.error);
@@ -37,7 +33,10 @@ export class ErrorInterceptor implements HttpInterceptor {
               break;
             case 401:
               this.toastr.error(error.error);
-              // this.toastr.error('Invalid username/password');
+              // this.logout();
+              break;
+            case 403:
+              this.toastr.error('You are not authorized to access this resource');
               break;
             case 404:
               this.router.navigateByUrl('/not-found');
@@ -48,12 +47,19 @@ export class ErrorInterceptor implements HttpInterceptor {
               break;
             default:
               this.toastr.error('Something unexpected went wrong');
-              console.log(error);
               break;
           }
         }
         return throwError(error);
       })
     );
+  }
+
+  logout() {
+    this.accountService.logout();    
+    this.router.navigateByUrl('/home').then(_ => {
+      // Needed to show the login fields on navbar   
+      window.location.reload();
+    });    
   }
 }

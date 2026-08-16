@@ -12,7 +12,7 @@ import { EmailValidateComponent as EmailValidateComponent } from './email-valida
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { ReceivingTypeListComponent } from './receiving-type/receiving-type-list/receiving-type-list.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   // {path: 'home', component: HomeComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},  
   // This path is created to avoid the need to add "canActivate" individually to routes
@@ -36,9 +36,3 @@ const routes: Routes = [
   // ** = invalid route
   {path: '**', component: NotFoundComponent, pathMatch: 'full'}
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

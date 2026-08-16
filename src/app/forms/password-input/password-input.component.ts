@@ -1,15 +1,16 @@
-import { Component, Input, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { Component, Input, Self, input } from '@angular/core';
+import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-password-input',
-  templateUrl: './password-input.component.html',
-  styleUrls: ['./password-input.component.css']
+    selector: 'app-password-input',
+    imports: [ReactiveFormsModule],
+    templateUrl: './password-input.component.html',
+    styleUrls: ['./password-input.component.css']
 })
 export class PasswordInputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() type = 'password';
-  @Input() additionalClasses = 'mb-2';
+  @Input() additionalClasses = 'mb-3';
 
   constructor(@Self() public ngControl: NgControl) { 
     this.ngControl.valueAccessor = this;

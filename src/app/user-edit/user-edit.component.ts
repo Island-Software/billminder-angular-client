@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormControlName, FormGroup, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormControlName, FormGroup, ReactiveFormsModule, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
 import { UserEdit } from '../models/user';
 import { AccountService } from '../services/account.service';
 import { UsersService } from '../services/users.service';
+import { TextInputComponent } from '../forms/text-input/text-input.component';
+import { PasswordInputComponent } from '../forms/password-input/password-input.component';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'app-user-edit',
-  templateUrl: './user-edit.component.html',
-  styleUrls: ['./user-edit.component.css']
+    selector: 'app-user-edit',
+    imports: [ReactiveFormsModule, TextInputComponent, PasswordInputComponent, NgbModule],
+    templateUrl: './user-edit.component.html',
+    styleUrls: ['./user-edit.component.css']
 })
 export class UserEditComponent implements OnInit {
   editUserForm = this.formBuilder.group({
     userName: [''],
     email: ['', [Validators.email]],
+    copyBillsValues: [false],
     password: ["", [Validators.minLength(4), Validators.maxLength(16)]],
     confirmPassword: ["", [Validators.minLength(4), Validators.maxLength(16), this.matchValues('password')]]
   });
@@ -46,6 +51,7 @@ export class UserEditComponent implements OnInit {
         this.currentUser = apiUser;
         this.editUserForm.controls["userName"].setValue(apiUser.userName);
         this.editUserForm.controls["email"].setValue(apiUser.email);
+        this.editUserForm.controls["copyBillsValues"].setValue(apiUser.copyBillsValues);
       });
       this.editUserForm.controls["userName"].disable();
   }

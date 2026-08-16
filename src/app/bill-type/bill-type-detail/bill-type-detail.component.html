@@ -1,23 +1,37 @@
-<div *ngIf="canShow()">
+@if (canShow()) {
+<div>
   <div class="container" style="text-align: left;">
     <div [hidden]="submitted">
       <h2 class="text-center text-primary">Bill type</h2>
       <hr>
-      <form (ngSubmit)="save()" #billTypeForm="ngForm">
-        <div class="form-group">
-          <label for="name">Description</label>
-          <input type="text" class="form-control" id="description" required [(ngModel)]="billType.description"
-            name="description" #name="ngModel">
-          <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div>
-        </div>
+      <form [formGroup]='billTypeForm' (ngSubmit)="save()">
 
+        <app-text-input [formControl]='billTypeForm.controls["description"]' [label]='"Description"'></app-text-input>
+        
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="isActive" [(ngModel)]="billType.active" name="isActive">
+          <input type="checkbox" class="form-check-input" id="isActive" formControlName="active">
           <label for="isActive">Is active?</label>
         </div>
-
-        <button type="submit" class="btn btn-success" [disabled]="!billTypeForm.form.valid">Save</button>
+        
+        <button type="submit" class="btn btn-success mr-1 mt-3 me-2" [disabled]="!billTypeForm.valid">Save</button>
+        <button type="button" class="btn btn-secondary mt-3" (click)="close()">Cancel</button>
       </form>
     </div>
   </div>
 </div>
+}
+
+
+<!-- <form (ngSubmit)="save()" #billTypeForm="ngForm">
+      <div class="form-group">
+        <label for="name">Description</label>
+        <input type="text" class="form-control" id="description" required [(ngModel)]="billType.description"
+          name="description" #name="ngModel">
+          <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="isActive" [(ngModel)]="billType.active" name="isActive">
+          <label for="isActive">Is active?</label>
+        </div>
+        <button type="submit" class="btn btn-success" >Save</button>
+      </form> -->

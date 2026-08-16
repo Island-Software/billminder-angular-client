@@ -1,10 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { map, switchMap, take } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 import { Bill, CopyBillDto, NewBillDto, UpdateBillDto } from '../models/bill';
 import { PaginatedResult } from '../models/pagination';
 import { UsersService } from './users.service';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,18 @@ import { UsersService } from './users.service';
 export class BillsService {
   baseUrl = environment.apiUrl;
   paginatedResult: PaginatedResult<Bill[]> = new PaginatedResult<Bill[]>();
+  userName: string = '';
+  copyBillsValues: boolean = false;
 
-  constructor(private http: HttpClient, private usersService: UsersService) { }
+  constructor(private http: HttpClient, private usersService: UsersService, private accountService: AccountService) {
+    accountService.currentUser$.pipe(take(1)).subscribe({
+      next: user => {
+        this.userName = user.username;
+      }
+    });
+  }
 
-  getBills(username: string, month: number, year: number, page?: number, itemsPerPage?: number) {    
+  getBills(username: string, month: number, year: number, page?: number, itemsPerPage?: number) {
     let params = new HttpParams();
 
     if (page !== undefined && itemsPerPage !== undefined) {
@@ -23,8 +32,9 @@ export class BillsService {
       params = params.append('pageSize', itemsPerPage!.toString());
     }
 
-    return this.http.get<Bill[]>(this.baseUrl + 'bills/name/' + username + '/' + month + '/' + year, {observe: 'response', params}).pipe(
-      map(response => {       
+    return this.http.get<Bill[]>(this.baseUrl + 'bills/name/' + username + '/' + month + '/' + year, { observe: 'response', params }).pipe(
+      map(response => {
+
         this.paginatedResult.result = response.body!;
         this.paginatedResult.result.map(r => {
           if (r.dueDate != undefined)
@@ -34,13 +44,14 @@ export class BillsService {
         if (response.headers.get('Pagination') !== null) {
           this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination')!);
         }
+
         return this.paginatedResult;
       })
-    );    
+    );
   }
 
   createBill(bill: NewBillDto) {
-    bill.userId = this.usersService.getCurrentUserId();    
+    bill.userId = this.usersService.getCurrentUserId();
     return this.http.post(this.baseUrl + 'bills/create', bill);
   }
 
@@ -50,13 +61,23 @@ export class BillsService {
 
   delete(bill: Bill) {
     return this.http.delete(this.baseUrl + 'bills/' + bill.id);
-  }  
+  }
 
-  copyBills(currentMonth: number, currentYear: number)
-  {
-    let copyBillDTO: CopyBillDto = { 
-      userId: this.usersService.getCurrentUserId(), currentMonth: currentMonth, currentYear: currentYear };
-    
-    return this.http.post(this.baseUrl + 'bills/copy', copyBillDTO);
+  copyBills(currentMonth: number, currentYear: number) {
+    return this.usersService.getUser(this.userName).pipe(
+      switchMap(apiUser => {
+        const copyBillDTO: CopyBillDto = {
+          userId: this.usersService.getCurrentUserId(),
+          currentMonth,
+          currentYear,
+          copyValues: apiUser.copyBillsValues
+        };
+
+        return this.http.post(
+          this.baseUrl + 'bills/copy',
+          copyBillDTO
+        );
+      })
+    );
   }
 }

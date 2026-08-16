@@ -1,16 +1,21 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
-import { MONTHS } from 'src/app/consts/months';
-import { ReceivingType } from 'src/app/models/receiving-type';
-import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
-import { ReceivingService } from 'src/app/services/receiving.service';
+import { MONTHS } from '../../consts/months';
+import { TextInputComponent } from '../../forms/text-input/text-input.component';
+import { ReceivingType } from '../../models/receiving-type';
+import { ReceivingTypesService } from '../../services/receiving-types.service';
+import { ReceivingService } from '../../services/receiving.service';
 
 @Component({
-  selector: 'app-receiving-register',
-  templateUrl: './receiving-register.component.html',
-  styleUrls: ['./receiving-register.component.css']
+    selector: 'app-receiving-register',
+    imports: [ReactiveFormsModule, BsDatepickerModule, TextInputComponent],
+    templateUrl: './receiving-register.component.html',
+    providers: [DatePipe],
+    styleUrls: ['./receiving-register.component.css']
 })
 export class ReceivingRegisterComponent implements OnInit {
   @Output() saveReceivingEvent = new EventEmitter<boolean>();
@@ -20,6 +25,7 @@ export class ReceivingRegisterComponent implements OnInit {
   months = MONTHS;
 
   constructor(private billsService: ReceivingService, private receivingTypesService: ReceivingTypesService, private toastrService: ToastrService,
+    private activeModal: NgbActiveModal,
     public datePipe : DatePipe) { }
 
   ngOnInit(): void {
@@ -61,10 +67,12 @@ export class ReceivingRegisterComponent implements OnInit {
 
   close() {
     this.saveReceivingEvent.emit(false);
+    this.activeModal.close(false);
   }
 
   closeAndReloadParent() {
     this.saveReceivingEvent.emit(true);
+    this.activeModal.close(true);
   }
 
   onValueChange(value: Date): void {

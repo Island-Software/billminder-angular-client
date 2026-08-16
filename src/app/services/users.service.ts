@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { User, UserEdit } from '../models/user';
 
 @Injectable({
@@ -20,10 +20,12 @@ export class UsersService {
   }
 
   getCurrentUserId() {
+    // TODO: Refactor to use the current user from the account service instead of localStorage
     return JSON.parse(localStorage.getItem('user')!).userId;
   }
 
   getCurrentUserName() {
+    // TODO: Refactor to use the current user from the account service instead of localStorage
     return JSON.parse(localStorage.getItem('user')!).username;
   }
 

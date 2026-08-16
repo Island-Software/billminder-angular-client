@@ -1,15 +1,17 @@
 <div class="modal-header">    
-    <h4 class="modal-title pull-left mt-2 text-success">New bill type</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
-        <span aria-hidden="true">&times;</span>
-    </button>
+    <div class="container">
+        <h4 class="modal-title pull-left mt-2 text-success">New bill type</h4>
+        <button type="button" class="btn btn-secondary pull-right" style="min-width: 10px;" aria-label="Close" (click)="close()">
+            <i class="bi bi-x-circle"></i>
+        </button>
+        
+    </div>
 </div>
-<div class="modal-body">
-    <div class="container" style="text-align: left;">
+<div class="modal-body">    
+    <div class="container" style="text-align: left;">    
         <form [formGroup]='newBillTypeForm' (ngSubmit)="add()">
 
             <app-text-input [formControl]='newBillTypeForm.controls["description"]' [label]='"Description"'></app-text-input>            
-            <!-- <app-text-input [formControl]='newBillTypeForm.controls["active"]' [type]='"checkbox"' [label]='"Is Active?"'></app-text-input> -->
 
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="isActive" formControlName="active">

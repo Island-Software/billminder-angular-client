@@ -1,17 +1,25 @@
-<div class="form-group">    
-    <input 
+<div class="form-group">
+  <input
     [class.is-invalid]="ngControl.touched && ngControl.invalid"
-      type={{type}} 
-      class="form-control rounded-3 {{additionalClasses}}" 
-      [formControl]="ngControl.control"
-      placeholder={{label}}      
-      >
-    <div *ngIf="ngControl.control?.errors?.required" class="invalid-feedback">Please enter a {{label}}</div>
-    <div *ngIf="ngControl.control?.errors?.minlength" class="invalid-feedback">
-      {{label}} must contain at least {{ngControl.control?.errors?.minlength['requiredLength']}} characters
-    </div>
-    <div *ngIf="ngControl.control?.errors?.maxlength" class="invalid-feedback">
-      {{label}} must contain a maximum of {{ngControl.control?.errors?.maxlength['requiredLength']}} characters
-    </div>
-    <div *ngIf="ngControl.control?.errors?.email" class="invalid-feedback">Please enter a valid email</div>
+    type={{type}}
+    class="form-control rounded-3 {{additionalClasses}}"
+    [formControl]="ngControl.control"
+    placeholder={{label}}
+    >
+    @if (ngControl.control?.errors?.required) {
+      <div class="invalid-feedback">Please enter a {{label}}</div>
+    }
+    @if (ngControl.control?.errors?.minlength) {
+      <div class="invalid-feedback">
+        {{label}} must contain at least {{ngControl.control?.errors?.minlength['requiredLength']}} characters
+      </div>
+    }
+    @if (ngControl.control?.errors?.maxlength) {
+      <div class="invalid-feedback">
+        {{label}} must contain a maximum of {{ngControl.control?.errors?.maxlength['requiredLength']}} characters
+      </div>
+    }
+    @if (ngControl.control?.errors?.email) {
+      <div class="invalid-feedback">Please enter a valid email</div>
+    }
   </div>

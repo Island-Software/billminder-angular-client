@@ -1,19 +1,23 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
+import { TextInputComponent } from '../../forms/text-input/text-input.component';
+import { ReceivingTypesService } from '../../services/receiving-types.service';
 
 @Component({
-  selector: 'app-receiving-type-register',
-  templateUrl: './receiving-type-register.component.html',
-  styleUrls: ['./receiving-type-register.component.css']
+    selector: 'app-receiving-type-register',
+    imports: [ReactiveFormsModule, TextInputComponent],
+    templateUrl: './receiving-type-register.component.html',
+    styleUrls: ['./receiving-type-register.component.css']
 })
 export class ReceivingTypeRegisterComponent implements OnInit {
   @Output() addReceivingTypeEvent = new EventEmitter<boolean>();
     newReceivingTypeForm!: UntypedFormGroup;
   
     constructor(private receivingTypeService: ReceivingTypesService,
-      private toastrService: ToastrService) { }
+      private toastrService: ToastrService, 
+      private activeModal: NgbActiveModal) { }
   
     ngOnInit(): void {
       this.initializeForm();
@@ -38,9 +42,11 @@ export class ReceivingTypeRegisterComponent implements OnInit {
   
     close() {
       this.addReceivingTypeEvent.emit(false);
+      this.activeModal.close(false);
     }
   
     closeAndReloadParent() {
       this.addReceivingTypeEvent.emit(true);
+      this.activeModal.close(true);
     }
 }

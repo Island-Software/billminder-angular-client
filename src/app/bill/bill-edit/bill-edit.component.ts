@@ -1,11 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Bill } from 'src/app/models/bill';
-import { BillsService } from 'src/app/services/bills.service';
+import { FormsModule } from '@angular/forms';
+import { Bill } from '../../models/bill';
+import { BillsService } from '../../services/bills.service';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @Component({
-  selector: 'app-bill-edit',
-  templateUrl: './bill-edit.component.html',
-  styleUrls: ['./bill-edit.component.css']
+    selector: 'app-bill-edit',
+    imports: [FormsModule, BsDatepickerModule],
+    templateUrl: './bill-edit.component.html',
+    styleUrls: ['./bill-edit.component.css']
 })
 export class BillEditComponent implements OnInit {
   @Input() bill?: any;

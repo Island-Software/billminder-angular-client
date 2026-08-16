@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginUser } from './models/login-user';
 import { AccountService } from './services/account.service';
+import { NavComponent } from './core/nav/nav.component';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'] 
+    selector: 'app-root',
+    imports: [NavComponent, RouterOutlet, BsDropdownModule],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
   title = 'Billminder';
@@ -19,6 +24,7 @@ export class AppComponent implements OnInit {
 
   setCurrentUser() {
     // Added the "!" to avoid an error. Assuming that will never return null
+    // TODO: Refactor to use the current user from the account service instead of localStorage
     const user: LoginUser = JSON.parse(localStorage.getItem('user')!);
     this.accountService.setCurrentUser(user);
   }  

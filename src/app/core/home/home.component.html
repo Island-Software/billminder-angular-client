@@ -1,25 +1,28 @@
 <div class="container-fluid mt-5">
-    <div *ngIf="!registerMode" style="text-align: center;">
-        <h1>Billminder - Financial Control App</h1>
-        <p class="lead">Input your bills and control the payment status</p>
-        <ng-container *ngIf="(accountService.currentUser$ | async) == null">
-            <p class="lead">Login above or click on register below!</p>
-            <div class="text-center">
-                <button (click)="registerToggle()" class="btn btn-success btn-lg mr-2 me-1">Register</button>
-                <button class="btn btn-secondary btn-lg">Learn more</button>
-            </div>
-
-        </ng-container>
-    </div>
-
-    <div *ngIf="registerMode" class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-6 col-12 justify-content-center">
-                <!--  Child to parent communication -->
-                <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
-                <!-- Parent to child communication -->
-                <!-- <app-register [usersFromHomeComponent]="users"></app-register> -->
-            </div>
+  @if (!registerMode) {
+    <div style="text-align: center;">
+      <h1>Billminder - Financial Control App</h1>
+      <p class="lead">Input your bills and control the payment status</p>
+      @if ((accountService.currentUser$ | async) == null) {
+        <p class="lead">Login above or click on register below!</p>
+        <div class="text-center">
+          <button (click)="registerToggle()" class="btn btn-success btn-lg mr-2 me-1">Register</button>
+          <!-- <button class="btn btn-secondary btn-lg">Learn more</button> -->
         </div>
+      }
     </div>
+  }
+
+  @if (registerMode) {
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-12 justify-content-center">
+          <!--  Child to parent communication -->
+          <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
+          <!-- Parent to child communication -->
+          <!-- <app-register [usersFromHomeComponent]="users"></app-register> -->
+        </div>
+      </div>
+    </div>
+  }
 </div>
