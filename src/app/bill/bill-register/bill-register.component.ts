@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MONTHS } from '../../consts/months';
@@ -19,6 +19,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class BillRegisterComponent implements OnInit {
   @Output() saveBillEvent = new EventEmitter<boolean>();
+  @Input() currentMonth: number = new Date().getMonth() + 1;
+  @Input() currentYear: number = new Date().getFullYear();
   billTypes: BillType[] = [];
   // Reactive forms
   newBillForm!: UntypedFormGroup;
@@ -46,17 +48,17 @@ export class BillRegisterComponent implements OnInit {
   }
 
   initializeForm() {
-    var currentDate = new Date();
-    currentDate.setHours(0);
-    currentDate.setMinutes(0);
-    currentDate.setSeconds(0);
-    currentDate.setMilliseconds(0);
+    // var currentDate = new Date();
+    // currentDate.setHours(0);
+    // currentDate.setMinutes(0);
+    // currentDate.setSeconds(0);
+    // currentDate.setMilliseconds(0);
 
     this.newBillForm = new UntypedFormGroup({
       typeId: new UntypedFormControl('', Validators.required),
       value: new UntypedFormControl('', Validators.required),
-      month: new UntypedFormControl(new Date().getMonth() + 1, Validators.required),
-      year: new UntypedFormControl(new Date().getFullYear(), [Validators.required, Validators.minLength(4), Validators.maxLength(4)]),
+      month: new UntypedFormControl(this.currentMonth, Validators.required),
+      year: new UntypedFormControl(this.currentYear, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]),
       dueDate: new UntypedFormControl(undefined)
     })
   }
