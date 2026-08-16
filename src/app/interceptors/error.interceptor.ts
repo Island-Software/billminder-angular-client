@@ -14,7 +14,8 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError(error => {
-        console.log('error interceptor', error);
+        // console.log('error interceptor', error);
+        // console.log(error.status);
         if (error) {
           switch (error.status) {
             case 400:
@@ -31,7 +32,11 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               break;
             case 401:
-              this.logout();
+              this.toastr.error(error.error);
+              // this.logout();
+              break;
+            case 403:
+              this.toastr.error('You are not authorized to access this resource');
               break;
             case 404:
               this.router.navigateByUrl('/not-found');

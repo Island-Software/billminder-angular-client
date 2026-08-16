@@ -36,4 +36,5 @@ export interface CopyBillDto {
     userId: number;
     currentMonth: number;
     currentYear: number;
+    copyValues: boolean;
 }

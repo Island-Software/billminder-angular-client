@@ -5,15 +5,28 @@
             <hr>
             <div class="form-group">
                 <label for="bill-type">Username</label>
-                <app-text-input [formControl]='editUserForm.controls["userName"]' [label]='"User name"'></app-text-input>
+                <app-text-input [formControl]='editUserForm.controls["userName"]'
+                    [label]='"User name"'></app-text-input>
                 <label for="bill-type">Email</label>
                 <app-text-input [formControl]='editUserForm.controls["email"]' [label]='"Email"'></app-text-input>
                 <hr>
+                <h3>Options</h3>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="copyBillsValues"
+                        formControlName="copyBillsValues" />
+                    <label class="form-check-label" for="copyBillsValues"
+                        ngbTooltip="Uncheck this options to copy only the bills & receivings, with values zeroed-out values">
+                        Copy bills & receivings with values to next month
+                    </label>
+                </div>
+                <hr>
                 <label for="">Change password (optional)</label>
-                <app-password-input [formControl]='editUserForm.controls["password"]' [label]='"New password"'></app-password-input>
-                <app-password-input [formControl]='editUserForm.controls["confirmPassword"]' [label]='"Confirm new password"'></app-password-input>
+                <app-password-input [formControl]='editUserForm.controls["password"]'
+                    [label]='"New password"'></app-password-input>
+                <app-password-input [formControl]='editUserForm.controls["confirmPassword"]'
+                    [label]='"Confirm new password"'></app-password-input>
             </div>
-        
+
             <div class="row justify-content-center" style="text-align: center;">
                 <div class="form-group">
                     <button class="btn btn-primary mr-2" type="submit" [disabled]="!editUserForm.valid">Save</button>

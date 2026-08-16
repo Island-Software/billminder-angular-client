@@ -14,4 +14,5 @@ export interface UserEdit {
     userName: string;
     email: string;
     password: string;
+    copyBillsValues: boolean;
 }

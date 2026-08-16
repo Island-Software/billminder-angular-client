@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
 
   setCurrentUser() {
     // Added the "!" to avoid an error. Assuming that will never return null
+    // TODO: Refactor to use the current user from the account service instead of localStorage
     const user: LoginUser = JSON.parse(localStorage.getItem('user')!);
     this.accountService.setCurrentUser(user);
   }  

@@ -20,10 +20,12 @@ export class UsersService {
   }
 
   getCurrentUserId() {
+    // TODO: Refactor to use the current user from the account service instead of localStorage
     return JSON.parse(localStorage.getItem('user')!).userId;
   }
 
   getCurrentUserName() {
+    // TODO: Refactor to use the current user from the account service instead of localStorage
     return JSON.parse(localStorage.getItem('user')!).username;
   }
 

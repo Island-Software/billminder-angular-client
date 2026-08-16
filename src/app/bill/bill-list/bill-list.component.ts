@@ -121,7 +121,6 @@ export class BillListComponent implements OnInit {
   closeModal(value: boolean) {
     this.modalRef.hide();
     if (value) {
-      console.log('closing modal');
       
       this.loadBillsAndReceivings();
       this.cdr.detectChanges();
@@ -146,7 +145,8 @@ export class BillListComponent implements OnInit {
 
   loadBillsAndReceivings() {
     this.loading.set(true);
-    
+
+    // TODO: Refactor to use the current user from the account service instead of localStorage
     this.username = JSON.parse(localStorage.getItem('user')!).username;
     
     this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumberBills, this.pageSizeBills).subscribe(bills => {            
