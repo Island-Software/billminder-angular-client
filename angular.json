@@ -18,7 +18,8 @@
           "builder": "@angular/build:application",
           "options": {            
             "outputPath": {
-              "base": "dist/paybills-client"
+              "base": "dist/paybills-client",
+              "browser": ""
             },
             "index": "src/index.html",
             "polyfills": [
