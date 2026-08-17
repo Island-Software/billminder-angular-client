@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -19,6 +19,8 @@ import { ReceivingService } from '../../services/receiving.service';
 })
 export class ReceivingRegisterComponent implements OnInit {
   @Output() saveReceivingEvent = new EventEmitter<boolean>();
+  @Input() currentMonth: number = new Date().getMonth() + 1;
+  @Input() currentYear: number = new Date().getFullYear();
   receivingTypes: ReceivingType[] = [];
   // Reactive forms
   newReceivingForm!: UntypedFormGroup;
@@ -49,8 +51,8 @@ export class ReceivingRegisterComponent implements OnInit {
     this.newReceivingForm = new UntypedFormGroup({
       typeId: new UntypedFormControl('', Validators.required),
       value: new UntypedFormControl('', Validators.required),
-      month: new UntypedFormControl(new Date().getMonth() + 1, Validators.required),
-      year: new UntypedFormControl(new Date().getFullYear(), [Validators.required, Validators.minLength(4), Validators.maxLength(4)]),
+      month: new UntypedFormControl(this.currentMonth, Validators.required),
+      year: new UntypedFormControl(this.currentYear, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]),
       dueDate: new UntypedFormControl(undefined)
     })
   }

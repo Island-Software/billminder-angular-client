@@ -104,6 +104,8 @@ export class BillListComponent implements OnInit {
 
   openModalBill() {
     const modal = this.ngbModalService.open(BillRegisterComponent, { centered: true });
+    modal.componentInstance.currentMonth = this.selectedMonth;
+    modal.componentInstance.currentYear = this.selectedYear;
 
     modal.result.then(() => {
       this.loadBillsAndReceivings();
@@ -112,6 +114,8 @@ export class BillListComponent implements OnInit {
 
   openModalReceiving() {
     const modal = this.ngbModalService.open(ReceivingRegisterComponent, { centered: true });
+    modal.componentInstance.currentMonth = this.selectedMonth;
+    modal.componentInstance.currentYear = this.selectedYear;
 
     modal.result.then(() => {
       this.loadBillsAndReceivings();
@@ -121,7 +125,6 @@ export class BillListComponent implements OnInit {
   closeModal(value: boolean) {
     this.modalRef.hide();
     if (value) {
-      
       this.loadBillsAndReceivings();
       this.cdr.detectChanges();
     }
