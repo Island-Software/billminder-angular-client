@@ -13,27 +13,14 @@
     line-height: 1;
     vertical-align: middle;
     justify-self: end;
-    /* padding-top: 0.5em; */
-    /* padding-bottom: 0.5em; */
-    /* border-radius: 0.375em; */
 }
 
-.container, .col {
+.container, .col {    
     border-radius: 10px;
 }
 
 .dropdown-item {
     cursor: pointer;
-}
-
-.bg-success {
-    --bs-bg-opacity: 1;
-    background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
-}
-
-.btn-success {
-    --bs-bg-opacity: 1;
-    background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .nav-link {
