@@ -2,3 +2,7 @@
     cursor: pointer;
     text-decoration: none;
 }
+
+.navbar {
+    margin-bottom: 2rem;
+}
