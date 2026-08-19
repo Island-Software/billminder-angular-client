@@ -87,9 +87,11 @@
         </table>
 
         @if (loading()) {
-          <div class="spinner-border text-primary ml-2" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
+          <div class="d-flex" style="justify-content: center; align-items: center;">        
+            <div class="spinner-border text-primary ml-2" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>          
         }
     </div>
 
@@ -169,34 +171,36 @@
               <th scope="col" [width]=250 style="vertical-align: middle;"><p class="smaller-font">Receiving date</p></th>
               <th scope="col"></th>
             </tr>
-          </thead>
-          <tbody>
-            @for (receiving of receivings; track receiving) {
-              <tr style="text-align: center;"
-                [ngClass]="{'table-success': receiving.received, 'table-danger': !receiving.received}">
-                <td>
-                  <input style="height: 15px; width: 15px; padding-right: 0px;" type="checkbox" name="select"
-                    [(ngModel)]="receiving.selected" (change)="this.updateSelectedReceivingsTotal()">
-                  </td>
-                  <td><a style="color: blue; cursor: pointer;"
-                  (click)="openModalForEdit(receivingEdit, receiving)">{{receiving.receivingType.description}}</a></td>
-                  <td>{{receiving.value | currency:"R$ "}}</td>
-                  <td>{{receiving.receivedDate | date:'dd/MM/yyyy'}}</td>
-                  <td style="text-align: start">
-                    <button class="btn btn-grid btn-danger" (click)="deleteReceiving(receiving)">
-                      <fa-icon [icon]="faDelete"></fa-icon>
-                    </button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
+        </thead>
+        <tbody>
+          @for (receiving of receivings; track receiving) {
+            <tr style="text-align: center;"
+              [ngClass]="{'table-success': receiving.received, 'table-danger': !receiving.received}">
+              <td>
+                <input style="height: 15px; width: 15px; padding-right: 0px;" type="checkbox" name="select"
+                  [(ngModel)]="receiving.selected" (change)="this.updateSelectedReceivingsTotal()">
+                </td>
+                <td><a style="color: blue; cursor: pointer;"
+                (click)="openModalForEdit(receivingEdit, receiving)">{{receiving.receivingType.description}}</a></td>
+                <td>{{receiving.value | currency:"R$ "}}</td>
+                <td>{{receiving.receivedDate | date:'dd/MM/yyyy'}}</td>
+                <td style="text-align: start">
+                  <button class="btn btn-grid btn-danger" (click)="deleteReceiving(receiving)">
+                    <fa-icon [icon]="faDelete"></fa-icon>
+                  </button>
+                </td>
+              </tr>
+            }
+        </tbody>
+      </table>
 
-          @if (loading()) {
-            <div class="spinner-border text-primary ml-2" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          }
+      @if (loading()) {
+       <div class="d-flex" style="justify-content: center; align-items: center;">        
+          <div class="spinner-border text-primary ml-2" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>        
+       </div>
+      }
     </div>
 
     <div class="d-flex bd-highlight mb-3">
