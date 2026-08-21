@@ -48,12 +48,6 @@ export class BillRegisterComponent implements OnInit {
   }
 
   initializeForm() {
-    // var currentDate = new Date();
-    // currentDate.setHours(0);
-    // currentDate.setMinutes(0);
-    // currentDate.setSeconds(0);
-    // currentDate.setMilliseconds(0);
-
     this.newBillForm = new UntypedFormGroup({
       typeId: new UntypedFormControl('', Validators.required),
       value: new UntypedFormControl('', Validators.required),
@@ -73,7 +67,6 @@ export class BillRegisterComponent implements OnInit {
   }
 
   close() {
-    console.log("close");
     this.saveBillEvent.emit(false);
     this.activeModal.close(false);
   }

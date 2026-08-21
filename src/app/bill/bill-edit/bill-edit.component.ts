@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Bill } from '../../models/bill';
 import { BillsService } from '../../services/bills.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-bill-edit',
@@ -14,7 +14,8 @@ export class BillEditComponent implements OnInit {
   @Input() bill?: any;
   @Output() saveBillEvent = new EventEmitter<boolean>();
 
-  constructor(private billsService: BillsService) {
+  constructor(private billsService: BillsService, 
+    private activeModal: NgbActiveModal,) {
    }
 
   ngOnInit(): void {
@@ -22,17 +23,21 @@ export class BillEditComponent implements OnInit {
   }
 
   save() {
-    if (this.bill)
-      this.billsService.updateBill(this.bill)
-        .subscribe(_ => this.saveBillEvent.emit(true));
+    this.billsService.updateBill(this.bill)
+      .subscribe(_ => {
+        this.saveBillEvent.emit(true);
+        this.activeModal.close(true);
+      })
   }
 
   close() {
     this.saveBillEvent.emit(false);
+    this.activeModal.close(false);
   }
 
   closeAndReloadParent() {
     this.saveBillEvent.emit(true);
+    this.activeModal.close(true);
   }
 
   onValueChange(value: Date): void {
