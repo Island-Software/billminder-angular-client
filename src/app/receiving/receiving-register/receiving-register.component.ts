@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -26,28 +26,28 @@ export class ReceivingRegisterComponent implements OnInit {
   newReceivingForm!: UntypedFormGroup;
   months = MONTHS;
 
-  constructor(private billsService: ReceivingService, private receivingTypesService: ReceivingTypesService, private toastrService: ToastrService,
+  constructor(private billsService: ReceivingService, 
+    private receivingTypesService: ReceivingTypesService, 
+    private toastrService: ToastrService,
     private activeModal: NgbActiveModal,
+    private cdr: ChangeDetectorRef,
     public datePipe : DatePipe) { }
 
   ngOnInit(): void {
+    this.loadReceivingTypes();    
     this.initializeForm();
-    this.loadBillTypes();    
   }
 
-  loadBillTypes() {
+  loadReceivingTypes() {
     this.receivingTypesService.getReceivingTypes().subscribe(
-      bt => this.receivingTypes = bt
+      bt => {
+        this.receivingTypes = bt
+        this.cdr.detectChanges();
+      }
     );
   }
 
   initializeForm() {
-    var currentDate = new Date();
-    currentDate.setHours(0);
-    currentDate.setMinutes(0);
-    currentDate.setSeconds(0);
-    currentDate.setMilliseconds(0);
-
     this.newReceivingForm = new UntypedFormGroup({
       typeId: new UntypedFormControl('', Validators.required),
       value: new UntypedFormControl('', Validators.required),

@@ -1,1 +1,26 @@
-<p>receiving-edit works!</p>
+<div class="modal-header">
+    <div class="container">
+        <h4 class="modal-title pull-left text-primary">Edit receiving</h4>
+    
+        <button type="button" class="btn btn-secondary pull-right" style="min-width: 10px;" aria-label="Close"
+        (click)="close()">
+        <i class="bi bi-x-circle"></i>
+        </button>    
+    </div>
+</div>
+<div class="modal-body">
+    <form (ngSubmit)="save()" autocomplete="off" #receivingForm="ngForm">
+        <div class="form-group">
+            <label for="value">Value</label>
+            <input type="number" step="0.01" placeholder="0.00" class="form-control w-25" name="value" id="value" required
+            [(ngModel)]="receiving!.value">
+
+            <label style="padding-top: 10px;">Received date (optional)</label>
+            <input class="form-control w-25" type="datetime" bsDatepicker [(bsValue)]="receiving!.receivedDate"
+            (bsValueChange)="onValueChange($event)"
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', showTodayButton: true }">
+        </div>
+        <button class="btn btn-success mt-3 me-1" type="submit" [disabled]="!receivingForm.valid">Save</button>
+        <button type="button" class="btn btn-secondary mt-3" (click)="close()">Cancel</button>
+    </form>
+</div>

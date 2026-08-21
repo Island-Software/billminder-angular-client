@@ -72,8 +72,9 @@
                 <input style="height: 15px; width: 15px; padding-right: 0px;" type="checkbox" name="select"
                   [(ngModel)]="bill.selected" (change)="this.updateSelectedBillsTotal()">
                 </td>
-                <td><a style="color: blue; cursor: pointer;"
-                (click)="openModalForEdit(billEdit, bill)">{{bill.billType.description}}</a></td>
+                <td>
+                  <a style="color: blue; cursor: pointer;" (click)="openBillForEdit(bill)">{{bill.billType.description}}</a>
+                </td>
                 <td>{{bill.value | currency:"R$ "}}</td>
                 <td>{{bill.dueDate | date:'dd/MM/yyyy'}}</td>
                 <td style="text-align: start">
@@ -181,7 +182,7 @@
                   [(ngModel)]="receiving.selected" (change)="this.updateSelectedReceivingsTotal()">
                 </td>
                 <td><a style="color: blue; cursor: pointer;"
-                (click)="openModalForEdit(receivingEdit, receiving)">{{receiving.receivingType.description}}</a></td>
+                (click)="openReceivingForEdit(receiving)">{{receiving.receivingType.description}}</a></td>
                 <td>{{receiving.value | currency:"R$ "}}</td>
                 <td>{{receiving.receivedDate | date:'dd/MM/yyyy'}}</td>
                 <td style="text-align: start">

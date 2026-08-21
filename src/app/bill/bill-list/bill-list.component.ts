@@ -15,6 +15,8 @@ import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BillRegisterComponent } from '../bill-register/bill-register.component';
 import { ReceivingRegisterComponent } from '../../receiving/receiving-register/receiving-register.component';
+import { BillEditComponent } from '../bill-edit/bill-edit.component';
+import { ReceivingEditComponent } from '../../receiving/receiving-edit/receiving-edit.component';
 
 @Component({
   selector: 'app-bill-list',
@@ -97,9 +99,34 @@ export class BillListComponent implements OnInit {
     this.loadBillsAndReceivings();
   }
 
-  openModalForEdit(template: TemplateRef<any>, billToEdit: Bill) {
-    this.selectedBill = billToEdit;
-    this.modalRef = this.modalService.show(template);
+  openBillForEdit(billToEdit: Bill) {
+    const modalRef = this.ngbModalService.open(BillEditComponent, { centered: true });
+    modalRef.componentInstance.bill = billToEdit;
+
+    modalRef.result.then((result) => {      
+      if (result) {
+        this.loadBillsAndReceivings();
+      }
+    }).catch(() => {});
+  }
+
+  openReceivingForEdit(receivingToEdit: Receiving) {
+    const modalRef = this.ngbModalService.open(ReceivingEditComponent, { centered: true });
+    modalRef.componentInstance.receiving = receivingToEdit;
+
+    modalRef.result.then(() => {
+      this.loadBillsAndReceivings();
+    }).catch(() => {});
+  }
+
+  openModalForEdit(billToEdit: Bill) {
+    console.log('Selected bill for edit:', this.selectedBill); 
+    const modal = this.ngbModalService.open(BillEditComponent, { centered: true });
+    modal.componentInstance.billToEdit = billToEdit;
+
+    modal.result.then(() => {
+      this.loadBillsAndReceivings();
+    }).catch(() => {});
   }
 
   openModalBill() {
@@ -153,6 +180,7 @@ export class BillListComponent implements OnInit {
     this.username = JSON.parse(localStorage.getItem('user')!).username;
     
     this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumberBills, this.pageSizeBills).subscribe(bills => {            
+      console.log('Bills loaded:', bills.result);
       this.bills = bills.result;
       
       this.paginationBills = bills.pagination;
