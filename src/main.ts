@@ -12,6 +12,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { ErrorInterceptor } from './app/interceptors/error.interceptor';
 import { JwtInterceptor } from './app/interceptors/jwt.interceptor';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 if (environment.production) {
   enableProdMode();
@@ -27,7 +28,8 @@ bootstrapApplication(AppComponent, {
     provideAnimations(),
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient(withInterceptorsFromDi()),
+    provideEnvironmentNgxMask(),
   ],
 })
   .catch(err => console.error(err));

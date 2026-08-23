@@ -12,8 +12,19 @@
     <form (ngSubmit)="save()" autocomplete="off" #receivingForm="ngForm">
         <div class="form-group">
             <label for="value">Value</label>
-            <input type="number" step="0.01" placeholder="0.00" class="form-control w-25" name="value" id="value" required
-            [(ngModel)]="receiving!.value">
+            <input 
+                type="text" 
+                inputmode="number"
+                placeholder="0.00" 
+                class="form-control w-25" 
+                name="value" 
+                id="value" required
+                [(ngModel)]="receiving!.value"
+                mask="separator.2"
+                thousandSeparator="."
+                decimalMarker="."
+                prefix="R$ ",
+                [leadZero]="true">
 
             <label style="padding-top: 10px;">Received date (optional)</label>
             <input class="form-control w-25" type="datetime" bsDatepicker [(bsValue)]="receiving!.receivedDate"
