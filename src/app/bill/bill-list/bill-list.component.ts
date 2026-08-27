@@ -4,7 +4,7 @@ import { Pagination } from '../../models/pagination';
 import { BillsService } from '../../services/bills.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { MONTHS } from '../../consts/months';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@iqx-limited/ngx-toastr';
 import { faCopy, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Receiving } from '../../models/receiving';
 import { ReceivingService } from '../../services/receiving.service';
@@ -17,6 +17,7 @@ import { BillRegisterComponent } from '../bill-register/bill-register.component'
 import { ReceivingRegisterComponent } from '../../receiving/receiving-register/receiving-register.component';
 import { BillEditComponent } from '../bill-edit/bill-edit.component';
 import { ReceivingEditComponent } from '../../receiving/receiving-edit/receiving-edit.component';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-bill-list',
@@ -61,7 +62,7 @@ export class BillListComponent implements OnInit {
   checkAllBillsState: boolean = false;
   checkAllReceivingsState: boolean = false;
 
-  constructor(private billsService: BillsService, private receivingService: ReceivingService, private modalService: BsModalService,
+  constructor(private billsService: BillsService, private receivingService: ReceivingService, private utilsService: UtilsService,
     private ngbModalService: NgbModal, private toastrServie: ToastrService, private cdr: ChangeDetectorRef) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
@@ -114,8 +115,10 @@ export class BillListComponent implements OnInit {
     const modalRef = this.ngbModalService.open(ReceivingEditComponent, { centered: true });
     modalRef.componentInstance.receiving = receivingToEdit;
 
-    modalRef.result.then(() => {
-      this.loadBillsAndReceivings();
+    modalRef.result.then((result) => {
+      if (result) {
+        this.loadBillsAndReceivings();
+      }
     }).catch(() => {});
   }
 
@@ -297,10 +300,10 @@ export class BillListComponent implements OnInit {
       this.loadBillsAndReceivings();
   }
 
-  copyBills() {
-    if (confirm("Do you want to copy all bills from this month to the next?")) {
-      this.billsService.copyBills(this.selectedMonth, this.selectedYear).subscribe(_ => {
-        this.toastrServie.success("Bills copied successfuly");
+  copyBillsAndReceivings() {
+    if (confirm("Do you want to copy all bills and receivings from this month to the next?")) {
+      this.utilsService.copyBills(this.selectedMonth, this.selectedYear).subscribe(_ => {
+        this.toastrServie.success("Bills and receivings copied successfuly");
       });
     }
   }

@@ -5,13 +5,14 @@ import { environment } from './environments/environment';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
-import { provideToastr } from 'ngx-toastr';
+import { provideToastr } from '@iqx-limited/ngx-toastr';
 import { routes } from './app/app-routing.module';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { ErrorInterceptor } from './app/interceptors/error.interceptor';
 import { JwtInterceptor } from './app/interceptors/jwt.interceptor';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 if (environment.production) {
   enableProdMode();
@@ -19,7 +20,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes), 
+    provideRouter(routes),
     provideToastr({
       timeOut: 3000,
       positionClass: 'toast-bottom-right'
@@ -27,7 +28,8 @@ bootstrapApplication(AppComponent, {
     provideAnimations(),
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient(withInterceptorsFromDi()),
+    provideEnvironmentNgxMask(),
   ],
 })
   .catch(err => console.error(err));

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@iqx-limited/ngx-toastr';
 import { catchError } from 'rxjs/operators';
 import { AccountService } from '../services/account.service';
 
@@ -31,9 +31,12 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.toastr.error(error.error);
               }
               break;
-            case 401:
-              this.toastr.error(error.error);
-              // this.logout();
+            case 401:                            
+              if (error.error && error.error === 'Invalid username/password') {
+                this.toastr.error(error.error);
+              } else {
+                this.logout();
+              }
               break;
             case 403:
               this.toastr.error('You are not authorized to access this resource');

@@ -13,8 +13,7 @@ import { AccountService } from './account.service';
 export class BillsService {
   baseUrl = environment.apiUrl;
   paginatedResult: PaginatedResult<Bill[]> = new PaginatedResult<Bill[]>();
-  userName: string = '';
-  copyBillsValues: boolean = false;
+  userName: string = '';  
 
   constructor(private http: HttpClient, private usersService: UsersService, private accountService: AccountService) {
     accountService.currentUser$.pipe(take(1)).subscribe({
@@ -61,23 +60,5 @@ export class BillsService {
 
   delete(bill: Bill) {
     return this.http.delete(this.baseUrl + 'bills/' + bill.id);
-  }
-
-  copyBills(currentMonth: number, currentYear: number) {
-    return this.usersService.getUser(this.userName).pipe(
-      switchMap(apiUser => {
-        const copyBillDTO: CopyBillDto = {
-          userId: this.usersService.getCurrentUserId(),
-          currentMonth,
-          currentYear,
-          copyValues: apiUser.copyBillsValues
-        };
-
-        return this.http.post(
-          this.baseUrl + 'bills/copy',
-          copyBillDTO
-        );
-      })
-    );
   }
 }

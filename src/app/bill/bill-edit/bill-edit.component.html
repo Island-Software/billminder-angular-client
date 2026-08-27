@@ -1,11 +1,11 @@
 <div class="modal-header">
   <div class="container">
     <h4 class="modal-title pull-left text-primary">Edit bill</h4>
-  
+
     <button type="button" class="btn btn-secondary pull-right" style="min-width: 10px;" aria-label="Close"
       (click)="close()">
       <i class="bi bi-x-circle"></i>
-    </button>    
+    </button>
   </div>
 
 </div>
@@ -14,8 +14,23 @@
   <form (ngSubmit)="save()" autocomplete="off" #billForm="ngForm">
     <div class="form-group">
       <label for="value">Value</label>
-      <input type="number" step="0.01" placeholder="0.00" class="form-control w-25" name="value" id="value" required
-        [(ngModel)]="bill!.value">
+
+      <input 
+        type="text" 
+        inputmode="number"
+        class="form-control w-25" 
+        name="value" 
+        placeholder="0.00" 
+        id="value" 
+        required
+        [(ngModel)]="bill!.value"
+        mask="separator.2"
+        thousandSeparator="."
+        decimalMarker="."
+        prefix="R$ "
+        [leadZero]="true"
+      >
+
 
       <label style="padding-top: 10px;">Due date (optional)</label>
       <input class="form-control w-25" type="datetime" bsDatepicker [(bsValue)]="bill!.dueDate"

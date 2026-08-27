@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@iqx-limited/ngx-toastr';
 import { ReceivingType } from '../../models/receiving-type';
 import { ReceivingTypesService } from '../../services/receiving-types.service';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
