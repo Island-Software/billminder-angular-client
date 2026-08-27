@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@iqx-limited/ngx-toastr';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AccountService } from '../services/account.service';

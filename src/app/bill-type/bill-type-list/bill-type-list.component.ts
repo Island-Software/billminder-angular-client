@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@iqx-limited/ngx-toastr';
 import { BillType } from '../../models/bill-type';
 import { BillTypesService } from '../../services/bill-types.service';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';

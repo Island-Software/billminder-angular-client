@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@iqx-limited/ngx-toastr';
 import { TextInputComponent } from '../../forms/text-input/text-input.component';
 import { ReceivingTypesService } from '../../services/receiving-types.service';
 

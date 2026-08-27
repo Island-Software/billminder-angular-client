@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@iqx-limited/ngx-toastr';
 import { AccountService } from '../../services/account.service';
 import { TextInputComponent } from '../../forms/text-input/text-input.component';
 import { PasswordInputComponent } from '../../forms/password-input/password-input.component';

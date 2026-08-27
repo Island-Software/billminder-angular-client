@@ -5,7 +5,7 @@ import { environment } from './environments/environment';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
-import { provideToastr } from 'ngx-toastr';
+import { provideToastr } from '@iqx-limited/ngx-toastr';
 import { routes } from './app/app-routing.module';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -20,7 +20,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes), 
+    provideRouter(routes),
     provideToastr({
       timeOut: 3000,
       positionClass: 'toast-bottom-right'

@@ -1,6 +1,6 @@
 import { ApplicationConfig } from '@angular/core';
 
-import { provideToastr } from 'ngx-toastr';
+import { provideToastr } from '@iqx-limited/ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [    

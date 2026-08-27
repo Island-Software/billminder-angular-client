@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormControlName, FormGroup, ReactiveFormsModule, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@iqx-limited/ngx-toastr';
 import { take } from 'rxjs/operators';
 import { UserEdit } from '../models/user';
 import { AccountService } from '../services/account.service';

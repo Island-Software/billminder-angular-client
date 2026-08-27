@@ -4,7 +4,7 @@ import { Pagination } from '../../models/pagination';
 import { BillsService } from '../../services/bills.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { MONTHS } from '../../consts/months';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '@iqx-limited/ngx-toastr';
 import { faCopy, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Receiving } from '../../models/receiving';
 import { ReceivingService } from '../../services/receiving.service';
