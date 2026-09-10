@@ -18,6 +18,7 @@ import { ReceivingRegisterComponent } from '../../receiving/receiving-register/r
 import { BillEditComponent } from '../bill-edit/bill-edit.component';
 import { ReceivingEditComponent } from '../../receiving/receiving-edit/receiving-edit.component';
 import { UtilsService } from '../../services/utils.service';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-bill-list',
@@ -62,15 +63,28 @@ export class BillListComponent implements OnInit {
   checkAllBillsState: boolean = false;
   checkAllReceivingsState: boolean = false;
 
-  constructor(private billsService: BillsService, private receivingService: ReceivingService, private utilsService: UtilsService,
-    private ngbModalService: NgbModal, private toastrServie: ToastrService, private cdr: ChangeDetectorRef) {
+  constructor(
+    private billsService: BillsService, 
+    private receivingService: ReceivingService, 
+    private utilsService: UtilsService,
+    private usersService: UsersService,
+    private ngbModalService: NgbModal, 
+    private toastrServie: ToastrService, 
+    private cdr: ChangeDetectorRef) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
   }
 
   ngOnInit(): void {
-    this.loadBillsAndReceivings();
-    this.cdr.detectChanges();
+    this.usersService.getSettings().subscribe(settings => {
+      if (settings) {
+        this.pageSizeBills = settings.itemsPerPage;
+        this.pageSizeReceivings = settings.itemsPerPage;
+
+        this.loadBillsAndReceivings();
+        this.cdr.detectChanges();
+      }
+    });    
   }
 
   get selectedBillsTotal(): number {
@@ -122,8 +136,7 @@ export class BillListComponent implements OnInit {
     }).catch(() => {});
   }
 
-  openModalForEdit(billToEdit: Bill) {
-    console.log('Selected bill for edit:', this.selectedBill); 
+  openModalForEdit(billToEdit: Bill) {    
     const modal = this.ngbModalService.open(BillEditComponent, { centered: true });
     modal.componentInstance.billToEdit = billToEdit;
 
@@ -180,27 +193,26 @@ export class BillListComponent implements OnInit {
     this.loading.set(true);
 
     // TODO: Refactor to use the current user from the account service instead of localStorage
-    this.username = JSON.parse(localStorage.getItem('user')!).username;
-    
-    this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumberBills, this.pageSizeBills).subscribe(bills => {            
-      console.log('Bills loaded:', bills.result);
-      this.bills = bills.result;
-      
-      this.paginationBills = bills.pagination;
-      
-      this.loading.set(false);
-      this.updateTotal();
-    });
+    this.username = JSON.parse(localStorage.getItem('user')!).username;          
+      this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumberBills, this.pageSizeBills).subscribe(bills => {                    
+        this.bills = bills.result;
+        
+        this.paginationBills = bills.pagination;
+        
+        this.loading.set(false);
+        this.updateTotal();
+      });
 
-    this.receivingService.get(this.username, this.selectedMonth, this.selectedYear, this.pageNumberReceivings, this.pageSizeReceivings).subscribe(receivings => {
-      this.receivings = receivings.result;
-      
-      this.paginationReceivings = receivings.pagination;
-      
-      this.loading.set(false);
-      this.updateTotal();
-    });
-  }
+      this.receivingService.get(this.username, this.selectedMonth, this.selectedYear, this.pageNumberReceivings, this.pageSizeReceivings).subscribe(receivings => {
+        this.receivings = receivings.result;
+        
+        this.paginationReceivings = receivings.pagination;
+        
+        this.loading.set(false);
+        this.updateTotal();
+      });        
+    }
+  
 
   deleteBill(bill: Bill) {
     if (confirm("Are you sure to delete " + bill.billType.description + "?")) {

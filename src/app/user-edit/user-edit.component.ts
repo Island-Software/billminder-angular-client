@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormControlName, FormGroup, ReactiveFormsModule, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ToastrService } from '@iqx-limited/ngx-toastr';
 import { take } from 'rxjs/operators';
-import { UserEdit } from '../models/user';
+import { UserEditDto } from '../models/user';
 import { AccountService } from '../services/account.service';
 import { UsersService } from '../services/users.service';
 import { TextInputComponent } from '../forms/text-input/text-input.component';
@@ -18,13 +18,16 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 export class UserEditComponent implements OnInit {
   editUserForm = this.formBuilder.group({
     userName: [''],
-    email: ['', [Validators.email]],
-    copyBillsValues: [false],
+    email: ['', [Validators.email]],    
+    settings: this.formBuilder.group({
+      copyWithValues: [false],
+      itemsPerPage: [10]
+    }),
     password: ["", [Validators.minLength(4), Validators.maxLength(16)]],
     confirmPassword: ["", [Validators.minLength(4), Validators.maxLength(16), this.matchValues('password')]]
   });
   userName: any;
-  currentUser: UserEdit | null = null;
+  currentUser: UserEditDto | null = null;
   
   constructor(accountService: AccountService, private userService: UsersService, private formBuilder: FormBuilder, private toastr: ToastrService) {
     accountService.currentUser$.pipe(take(1)).subscribe({
@@ -47,16 +50,16 @@ export class UserEditComponent implements OnInit {
 
   loadUser() {    
     if (!this.userName) return;
-      this.userService.getUser(this.userName).subscribe((apiUser) => {        
-        this.currentUser = apiUser;
-        this.editUserForm.controls["userName"].setValue(apiUser.userName);
-        this.editUserForm.controls["email"].setValue(apiUser.email);
-        this.editUserForm.controls["copyBillsValues"].setValue(apiUser.copyBillsValues);
+      this.userService.getUser(this.userName).subscribe((user) => {        
+        this.currentUser = user;
+        this.editUserForm.controls["userName"].setValue(user.userName);
+        this.editUserForm.controls["email"].setValue(user.email);
+        this.editUserForm.controls["settings"].setValue(user.settings);
       });
       this.editUserForm.controls["userName"].disable();
   }
 
-  update() {
+  update() {        
     this.userService.update(this.userService.getCurrentUserId(), this.editUserForm.value).subscribe({
       complete: () => {
         this.toastr.success("Changes saved succesfully", "", { positionClass: 'toast-bottom-center'});

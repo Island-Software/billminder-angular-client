@@ -1,4 +1,5 @@
 import { Bill } from "./bill";
+import { Settings } from "./settings";
 
 export interface User {
     id: number;
@@ -9,10 +10,10 @@ export interface User {
     bills: Bill[];
 }
 
-export interface UserEdit {
+export interface UserEditDto {
     id: number;
     userName: string;
     email: string;
     password: string;
-    copyBillsValues: boolean;
+    settings: Settings;
 }
