@@ -29,7 +29,7 @@ export class UtilsService {
                 userId: this.usersService.getCurrentUserId(),
                 currentMonth,
                 currentYear,
-                copyValues: apiUser.copyBillsValues
+                copyValues: apiUser.settings.copyWithValues,
             };
 
             return this.http.post(

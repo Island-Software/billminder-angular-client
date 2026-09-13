@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { User, UserEdit } from '../models/user';
+import { User, UserEditDto } from '../models/user';
+import { Settings } from '../models/settings';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class UsersService {
   }
 
   getUser(username: string) {
-    return this.http.get<UserEdit>(this.baseUrl + 'users/name/' + username);
+    return this.http.get<UserEditDto>(this.baseUrl + 'users/name/' + username);
   }
 
   getCurrentUserId() {
@@ -31,5 +32,9 @@ export class UsersService {
 
   update(id: number, user: any) {
     return this.http.put(this.baseUrl + 'users/' + id, user);
+  }
+
+  getSettings() {
+    return this.http.get<Settings>(this.baseUrl + 'users/settings');
   }
 }

@@ -13,9 +13,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
-      catchError(error => {
-        // console.log('error interceptor', error);
-        // console.log(error.status);
+      catchError(error => {        
         if (error) {
           switch (error.status) {
             case 400:
@@ -31,12 +29,13 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.toastr.error(error.error);
               }
               break;
-            case 401:                            
-              if (error.error && error.error === 'Invalid username/password') {
-                this.toastr.error(error.error);
-              } else {
+            case 401:                               
+              if (error.error?.Code === 'TOKEN_EXPIRED') {
+                // this.toastr.error('Your session has expired. Please log in again.');
                 this.logout();
-              }
+              } else {
+                this.toastr.error(error.error);
+              }              
               break;
             case 403:
               this.toastr.error('You are not authorized to access this resource');
