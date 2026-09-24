@@ -3,11 +3,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReceivingService } from '../../services/receiving.service';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { NgxMaskDirective } from 'ngx-mask';
+import { CurrencyBrDirective } from '../../core/directive/currency-br.directive';
 
 @Component({
     selector: 'app-receiving-edit',
-    imports: [FormsModule, BsDatepickerModule, NgxMaskDirective],
+    imports: [FormsModule, BsDatepickerModule, CurrencyBrDirective],
     templateUrl: './receiving-edit.component.html',
     styleUrls: ['./receiving-edit.component.css']
 })

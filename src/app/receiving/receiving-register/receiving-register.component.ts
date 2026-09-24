@@ -9,10 +9,11 @@ import { TextInputComponent } from '../../forms/text-input/text-input.component'
 import { ReceivingType } from '../../models/receiving-type';
 import { ReceivingTypesService } from '../../services/receiving-types.service';
 import { ReceivingService } from '../../services/receiving.service';
+import { CurrencyBrDirective } from '../../core/directive/currency-br.directive';
 
 @Component({
     selector: 'app-receiving-register',
-    imports: [ReactiveFormsModule, BsDatepickerModule, TextInputComponent],
+    imports: [ReactiveFormsModule, BsDatepickerModule, TextInputComponent, CurrencyBrDirective],
     templateUrl: './receiving-register.component.html',
     providers: [DatePipe],
     styleUrls: ['./receiving-register.component.css']

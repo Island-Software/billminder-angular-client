@@ -3,11 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { BillsService } from '../../services/bills.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgxMaskDirective } from 'ngx-mask';
+import { CurrencyBrDirective } from '../../core/directive/currency-br.directive';
 
 @Component({
     selector: 'app-bill-edit',
-    imports: [FormsModule, BsDatepickerModule, NgxMaskDirective],
+    imports: [FormsModule, BsDatepickerModule, CurrencyBrDirective],
     templateUrl: './bill-edit.component.html',
     styleUrls: ['./bill-edit.component.css']
 })

@@ -24,9 +24,19 @@
       <div class="invalid-feedback">Please select a type</div>
     </div>
 
-    <label for="value" class="mt-2">Amount</label>
-    <input type="number" step="0.01" placeholder="0.00" class="form-control rounded me-auto w-25" name="value"
-      id="value" required [formControl]='newReceivingForm.controls["value"]'>
+    <label for="value" class="mt-2">Value</label>
+    <input 
+      type="text"
+      inputmode="decimal"
+      step="0.01" 
+      placeholder="R$ 0,00" 
+      class="form-control rounded me-auto w-25" 
+      name="value"
+      id="value" 
+      required 
+      [formControl]='newReceivingForm.controls["value"]'
+      appCurrencyBr
+    >
 
     <div style="padding-top: 15px;">
       <label for="">Due date (optional)</label>

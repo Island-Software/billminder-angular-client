@@ -77,8 +77,8 @@
                   <td>
                     <a style="color: blue; cursor: pointer;" (click)="openBillForEdit(bill)">{{bill.billType.description}}</a>
                   </td>
-                  <td>{{bill.value | currency:"R$ "}}</td>
-                  <td>{{bill.dueDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{ bill.value | currency: 'R$ '}}</td>
+                  <td>{{ bill.dueDate | date:'dd/MM/yyyy'}}</td>
                   <td style="text-align: end">
                     <button class="btn btn-grid btn-danger" (click)="deleteBill(bill)">
                       <fa-icon [icon]="faDelete"></fa-icon>

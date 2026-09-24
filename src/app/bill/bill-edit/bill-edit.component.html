@@ -17,18 +17,14 @@
 
       <input 
         type="text" 
-        inputmode="number"
+        inputmode="numeric"
         class="form-control w-25" 
         name="value" 
         placeholder="0.00" 
         id="value" 
         required
         [(ngModel)]="bill!.value"
-        mask="separator.2"
-        thousandSeparator="."
-        decimalMarker="."
-        prefix="R$ "
-        [leadZero]="true"
+        appCurrencyBr
       >
 
 
