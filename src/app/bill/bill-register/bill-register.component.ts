@@ -9,10 +9,11 @@ import { BillsService } from '../../services/bills.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TextInputComponent } from '../../forms/text-input/text-input.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { CurrencyBrDirective } from '../../core/directive/currency-br.directive';
 
 @Component({
   selector: 'app-bill-register',
-  imports: [FormsModule, ReactiveFormsModule, BsDatepickerModule, TextInputComponent],
+  imports: [FormsModule, ReactiveFormsModule, BsDatepickerModule, TextInputComponent, CurrencyBrDirective],
   templateUrl: './bill-register.component.html',
   providers: [DatePipe],
   styleUrls: ['./bill-register.component.css']
